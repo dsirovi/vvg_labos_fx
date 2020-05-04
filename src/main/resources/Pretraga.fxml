@@ -3,52 +3,34 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <GridPane hgap="2.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.java.vjezbe.login.PretragaController">
-  <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-  </columnConstraints>
-  <rowConstraints>
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-  </rowConstraints>
-   <children>
-      <MenuBar GridPane.columnSpan="2" GridPane.valignment="TOP">
-        <menus>
-          <Menu mnemonicParsing="false" text="Artikl">
-            <items>
-                  <Menu mnemonicParsing="false" text="Usluga">
-                    <items>
-                      <MenuItem mnemonicParsing="false" text="Pretraga" />
-                    </items>
-                  </Menu>
-                  <Menu mnemonicParsing="false" text="Automobil">
-                    <items>
-                      <MenuItem mnemonicParsing="false" text="Pretraga" />
-                    </items>
-                  </Menu>
-                  <Menu mnemonicParsing="false" text="Stan">
-                    <items>
-                      <MenuItem mnemonicParsing="false" text="Pretraga" />
-                    </items>
-                  </Menu>
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Korisnik">
-               <items>
-                  <Menu mnemonicParsing="false" text="Privatni">
-                    <items>
-                      <MenuItem mnemonicParsing="false" text="Pretraga" />
-                    </items>
-                  </Menu>
-                  <Menu mnemonicParsing="false" text="Poslovni">
-                    <items>
-                      <MenuItem mnemonicParsing="false" text="Pretraga" />
-                    </items>
-                  </Menu>
-               </items>
-          </Menu>
-        </menus>
-      </MenuBar>
-   </children>
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    </rowConstraints>
+    <MenuBar GridPane.columnSpan="2" GridPane.valignment="TOP">
+        <Menu mnemonicParsing="false" text="Artikl">
+            <Menu mnemonicParsing="false" text="Usluga">
+                <MenuItem mnemonicParsing="false" text="Pretraga" />
+            </Menu>
+            <Menu mnemonicParsing="false" text="Automobil">
+                <MenuItem mnemonicParsing="false" onAction="#prikaziPretraguAutomobila" text="Pretraga" />
+            </Menu>
+            <Menu mnemonicParsing="false" text="Stan">
+                <MenuItem mnemonicParsing="false" text="Pretraga" />
+            </Menu>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Korisnik">
+            <Menu mnemonicParsing="false" text="Privatni">
+                <MenuItem mnemonicParsing="false" text="Pretraga" />
+            </Menu>
+            <Menu mnemonicParsing="false" text="Poslovni">
+                <MenuItem mnemonicParsing="false" text="Pretraga" />
+            </Menu>
+        </Menu>
+    </MenuBar>
 </GridPane>

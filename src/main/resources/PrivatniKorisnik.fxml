@@ -22,7 +22,7 @@
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -30,61 +30,43 @@
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     </rowConstraints>
-    <children>
-        <MenuBar prefHeight="22.0" prefWidth="597.0" GridPane.columnSpan="2147483647" GridPane.valignment="TOP">
-            <menus>
-                <Menu mnemonicParsing="false" text="Artikl">
-                    <items>
-                        <Menu mnemonicParsing="false" text="Usluga">
-                            <items>
-                                <MenuItem mnemonicParsing="false" text="Pretraga" />
-                            </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="Automobil">
-                            <items>
-                                <MenuItem mnemonicParsing="false" text="Pretraga" />
-                            </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="Stan">
-                            <items>
-                                <MenuItem mnemonicParsing="false" text="Pretraga" />
-                            </items>
-                        </Menu>
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Korisnik">
-                    <items>
-                        <Menu mnemonicParsing="false" text="Privatni">
-                            <items>
-                                <MenuItem mnemonicParsing="false" text="Pretraga" />
-                            </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="Poslovni">
-                            <items>
-                                <MenuItem mnemonicParsing="false" text="Pretraga" />
-                            </items>
-                        </Menu>
-                    </items>
-                </Menu>
-            </menus>
-        </MenuBar>
-        <Label prefHeight="18.0" prefWidth="169.0" text="Pretrazivanje privatnih korisnika" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-        <Label prefHeight="18.0" prefWidth="26.0" text="Ime" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-        <Label prefHeight="18.0" prefWidth="46.0" text="Prezime" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-        <Label prefHeight="17.0" prefWidth="30.0" text="eMail" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-      <Label text="Telefon" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-        <TextField prefHeight="26.0" prefWidth="283.0" GridPane.columnIndex="5" GridPane.columnSpan="4" GridPane.rowIndex="4" />
-        <TextField GridPane.columnIndex="5" GridPane.columnSpan="4" GridPane.rowIndex="3" />
-        <TextField GridPane.columnIndex="5" GridPane.columnSpan="4" GridPane.rowIndex="2" />
-      <TextField prefHeight="26.0" prefWidth="283.0" GridPane.columnIndex="5" GridPane.columnSpan="4" GridPane.rowIndex="5" />
-        <Button mnemonicParsing="false" text="Pretrazi" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
-        <TableView prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="8">
-            <columns>
-                <TableColumn prefWidth="75.0" text="Ime" />
-                <TableColumn prefWidth="75.0" text="Prezime" />
-                <TableColumn prefWidth="75.0" text="eMail" />
-            <TableColumn prefWidth="75.0" text="Telefon" />
-            </columns>
-        </TableView>
-    </children>
+    <MenuBar prefHeight="22.0" prefWidth="597.0" GridPane.columnSpan="2147483647" GridPane.valignment="TOP">
+        <Menu mnemonicParsing="false" text="Artikl">
+            <Menu mnemonicParsing="false" text="Usluga">
+                <MenuItem mnemonicParsing="false" text="Pretraga" />
+            </Menu>
+            <Menu mnemonicParsing="false" text="Automobil">
+                <MenuItem mnemonicParsing="false" text="Pretraga" />
+            </Menu>
+            <Menu mnemonicParsing="false" text="Stan">
+                <MenuItem mnemonicParsing="false" text="Pretraga" />
+            </Menu>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Korisnik">
+            <Menu mnemonicParsing="false" text="Privatni">
+                <MenuItem mnemonicParsing="false" text="Pretraga" />
+            </Menu>
+            <Menu mnemonicParsing="false" text="Poslovni">
+                <MenuItem mnemonicParsing="false" text="Pretraga" />
+            </Menu>
+        </Menu>
+    </MenuBar>
+    <Label prefHeight="18.0" prefWidth="169.0" text="Pretrazivanje privatnih korisnika" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+    <Label prefHeight="18.0" prefWidth="26.0" text="Ime" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+    <Label prefHeight="18.0" prefWidth="46.0" text="Prezime" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+    <Label prefHeight="17.0" prefWidth="30.0" text="eMail" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+    <Label text="Telefon" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+    <TextField fx:id="emailTextField" prefHeight="26.0" prefWidth="283.0" GridPane.columnIndex="5" GridPane.columnSpan="4" GridPane.rowIndex="4" />
+    <TextField fx:id="prezimeTextField" GridPane.columnIndex="5" GridPane.columnSpan="4" GridPane.rowIndex="3" />
+    <TextField fx:id="imeTextField" GridPane.columnIndex="5" GridPane.columnSpan="4" GridPane.rowIndex="2" />
+    <TextField fx:id="telefonTextField" prefHeight="26.0" prefWidth="283.0" GridPane.columnIndex="5" GridPane.columnSpan="4" GridPane.rowIndex="5" />
+    <Button mnemonicParsing="false" text="Pretrazi" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+    <TableView prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="8">
+        <columns>
+            <TableColumn prefWidth="75.0" text="Ime" />
+            <TableColumn prefWidth="75.0" text="Prezime" />
+            <TableColumn prefWidth="75.0" text="eMail" />
+        <TableColumn prefWidth="75.0" text="Telefon" />
+        </columns>
+    </TableView>
 </GridPane>

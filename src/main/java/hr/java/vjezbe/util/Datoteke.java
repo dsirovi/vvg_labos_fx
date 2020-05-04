@@ -1,8 +1,6 @@
 package hr.java.vjezbe.util;
 
 import hr.java.vjezbe.entitet.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.math.BigDecimal;
@@ -14,11 +12,14 @@ import java.util.stream.Collectors;
 public class Datoteke {
 
     private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    public static final Logger logger = LoggerFactory.getLogger(Datoteke.class);
 
     File file = new File("dat/artikl");
 
-    {
+     {
+         dohvatiPodatke();
+     }
+
+    private void dohvatiPodatke() {
         try (Scanner unos = new Scanner(file)) {
             Map<Long, Korisnik> mapaKorisnika = new HashMap<>();
             while (unos.hasNextLine()) {
