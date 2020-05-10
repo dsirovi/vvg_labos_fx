@@ -1,4 +1,4 @@
-package hr.java.vjezbe.login;
+package hr.java.vjezbe.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

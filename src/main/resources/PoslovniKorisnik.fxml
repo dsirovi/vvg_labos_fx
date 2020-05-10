@@ -1,72 +1,116 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<GridPane hgap="2.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.java.vjezbe.login.PoslovniKorisnikContoller">
-    <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-    </columnConstraints>
-    <rowConstraints>
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    </rowConstraints>
-    <MenuBar prefHeight="22.0" prefWidth="597.0" GridPane.columnSpan="2147483647" GridPane.valignment="TOP">
-        <Menu mnemonicParsing="false" text="Artikl">
-            <Menu mnemonicParsing="false" text="Usluga">
-                <MenuItem mnemonicParsing="false" text="Pretraga" />
-            </Menu>
-            <Menu mnemonicParsing="false" text="Automobil">
-                <MenuItem mnemonicParsing="false" text="Pretraga" />
-            </Menu>
-            <Menu mnemonicParsing="false" text="Stan">
-                <MenuItem mnemonicParsing="false" text="Pretraga" />
-            </Menu>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Korisnik">
-            <Menu mnemonicParsing="false" text="Privatni">
-                <MenuItem mnemonicParsing="false" text="Pretraga" />
-            </Menu>
-            <Menu mnemonicParsing="false" text="Poslovni">
-                <MenuItem mnemonicParsing="false" text="Pretraga" />
-            </Menu>
-        </Menu>
-    </MenuBar>
-    <Label prefHeight="18.0" prefWidth="169.0" text="Pretrazivanje privatnih korisnika" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-    <Label prefHeight="18.0" prefWidth="26.0" text="Ime" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-    <Label prefHeight="18.0" prefWidth="46.0" text="Prezime" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-    <Label prefHeight="17.0" prefWidth="30.0" text="eMail" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-    <Label text="Web" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-    <TextField fx:id="emailTextField" prefHeight="26.0" prefWidth="283.0" GridPane.columnIndex="5" GridPane.columnSpan="4" GridPane.rowIndex="4" />
-    <TextField fx:id="prezimeTextField" GridPane.columnIndex="5" GridPane.columnSpan="4" GridPane.rowIndex="3" />
-    <TextField fx:id="imeTextField" GridPane.columnIndex="5" GridPane.columnSpan="4" GridPane.rowIndex="2" />
-    <TextField fx:id="webTextField" prefHeight="26.0" prefWidth="283.0" GridPane.columnIndex="5" GridPane.columnSpan="4" GridPane.rowIndex="5" />
-    <Button mnemonicParsing="false" text="Pretrazi" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
-    <TableView prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="8">
-        <columns>
-            <TableColumn prefWidth="75.0" text="Ime" />
-            <TableColumn prefWidth="75.0" text="Prezime" />
-            <TableColumn prefWidth="75.0" text="eMail" />
-            <TableColumn prefWidth="75.0" text="Web" />
-        </columns>
-    </TableView>
-</GridPane>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.java.vjezbe.controllers.PoslovniKorisnikContoller">
+    <top>
+        <MenuBar BorderPane.alignment="CENTER">
+            <menus>
+                <Menu mnemonicParsing="false" text="Artikli">
+                    <items>
+                        <Menu mnemonicParsing="false" text="Usluge">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#prikaziPretraguUsluga" text="Pretraga" />
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Automobili">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#prikaziPretraguAutomobila" text="Pretraga" />
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Stanovi">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#prikaziPretraguStanova" text="Pretraga" />
+                            </items>
+                        </Menu>
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Korisnici">
+                    <items>
+                        <Menu mnemonicParsing="false" text="Privatni">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#prikaziPretraguPrivatnihKorisnika" text="Pretraga" />
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Poslovni">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#prikaziPretraguPoslovnihKorisnika" text="Pretraga" />
+                            </items>
+                        </Menu>
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
+    <center>
+        <GridPane BorderPane.alignment="CENTER">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <Label text="Pretraga poslovnih korisnika" GridPane.columnSpan="2" GridPane.halignment="CENTER" />
+                <Label text="Naziv" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                    <GridPane.margin>
+                        <Insets right="50.0" />
+                    </GridPane.margin>
+                </Label>
+                <Label text="eMail" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+                    <GridPane.margin>
+                        <Insets right="50.0" />
+                    </GridPane.margin>
+                </Label>
+                <Label text="Telefon" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
+                    <GridPane.margin>
+                        <Insets right="50.0" />
+                    </GridPane.margin>
+                </Label>
+                <TextField fx:id="nazivTextField" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <GridPane.margin>
+                        <Insets left="30.0" right="30.0" />
+                    </GridPane.margin>
+                </TextField>
+                <TextField fx:id="emailTextField" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                    <GridPane.margin>
+                        <Insets left="30.0" right="30.0" />
+                    </GridPane.margin>
+                </TextField>
+                <TextField fx:id="telefonTextField" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                    <GridPane.margin>
+                        <Insets left="30.0" right="30.0" />
+                    </GridPane.margin>
+                </TextField>
+                <Button mnemonicParsing="false" onAction="#pretraziPoslovnogKorisnika" text="Pretraga" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                <Label text="Web" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+                    <GridPane.margin>
+                        <Insets right="50.0" />
+                    </GridPane.margin>
+                </Label>
+                <TextField fx:id="webTextField" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                    <GridPane.margin>
+                        <Insets left="30.0" right="30.0" />
+                    </GridPane.margin>
+                </TextField>
+            </children>
+        </GridPane>
+    </center>
+    <bottom>
+        <TableView fx:id="tableViewPoslovniKorisnik" prefHeight="250.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+            <columns>
+                <TableColumn fx:id="tableViewNazivPrivatnogKorisnika" prefWidth="75.0" text="Naziv" />
+                <TableColumn fx:id="tableViewEmailPrivatnogKorisnika" prefWidth="75.0" text="eMail" />
+                <TableColumn fx:id="tableViewWebPrivatnogKorisnika" prefWidth="75.0" text="Web" />
+                <TableColumn fx:id="tableViewTelefonPrivatnogKorisnika" prefWidth="75.0" text="Telefon" />
+            </columns>
+        </TableView>
+    </bottom>
+</BorderPane>
