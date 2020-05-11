@@ -6,7 +6,12 @@ import javafx.scene.layout.BorderPane;
 import java.io.IOException;
 
 public class PretragaController {
+    private final static String lokacijaDatoteke = "dat/";
 
+
+    public static String getLokacijaDatoteke() {
+        return lokacijaDatoteke;
+    }
 
     public void prikaziPretraguUsluga() {
         BorderPane root;

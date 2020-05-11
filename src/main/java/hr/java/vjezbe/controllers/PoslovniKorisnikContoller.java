@@ -1,7 +1,6 @@
 package hr.java.vjezbe.controllers;
 
 import hr.java.vjezbe.entitet.Korisnik;
-import hr.java.vjezbe.entitet.PoslovniKorisnik;
 import hr.java.vjezbe.util.Datoteke;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,14 +12,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class PoslovniKorisnikContoller {
 
-    List<PoslovniKorisnik> poslovniKorisnik;
+    List<Korisnik> poslovniKorisnik;
 
     @FXML
     private TextField nazivTextField;
@@ -33,13 +31,13 @@ public class PoslovniKorisnikContoller {
     @FXML
     private TableView<Korisnik> tableViewPoslovniKorisnik;
     @FXML
-    private TableColumn<Korisnik, String> tableViewNazivPrivatnogKorisnika;
+    private TableColumn<Korisnik, String> tableViewNazivPoslovnogKorisnika;
     @FXML
-    private TableColumn<Korisnik, String> tableViewEmailPrivatnogKorisnika;
+    private TableColumn<Korisnik, String> tableViewEmailPoslovnogKorisnika;
     @FXML
-    private TableColumn<Korisnik, String> tableViewWebPrivatnogKorisnika;
+    private TableColumn<Korisnik, String> tableViewWebPoslovnogKorisnika;
     @FXML
-    private TableColumn<Korisnik, String> tableViewTelefonPrivatnogKorisnika;
+    private TableColumn<Korisnik, String> tableViewTelefonPoslovnogKorisnika;
 
     public void pretraziPoslovnogKorisnika() {
         List<Korisnik> filtriraniPoslovniKorisnici = poslovniKorisnik.stream().filter(p ->
@@ -51,11 +49,11 @@ public class PoslovniKorisnikContoller {
         tableViewPoslovniKorisnik.setItems(pretraga );
     }
 
-    public void initialize() throws FileNotFoundException {
-        tableViewNazivPrivatnogKorisnika.setCellValueFactory(new PropertyValueFactory<Korisnik, String>("naziv"));
-        tableViewWebPrivatnogKorisnika.setCellValueFactory(new PropertyValueFactory<Korisnik, String>("web"));
-        tableViewEmailPrivatnogKorisnika.setCellValueFactory(new PropertyValueFactory<Korisnik, String>("email"));
-        tableViewTelefonPrivatnogKorisnika.setCellValueFactory(new PropertyValueFactory<Korisnik, String>("telefon"));
+    public void initialize() {
+        tableViewNazivPoslovnogKorisnika.setCellValueFactory(new PropertyValueFactory<Korisnik, String>("naziv"));
+        tableViewEmailPoslovnogKorisnika.setCellValueFactory(new PropertyValueFactory<Korisnik, String>("email"));
+        tableViewWebPoslovnogKorisnika.setCellValueFactory(new PropertyValueFactory<Korisnik, String>("web"));
+        tableViewTelefonPoslovnogKorisnika.setCellValueFactory(new PropertyValueFactory<Korisnik, String>("telefon"));
         poslovniKorisnik = Datoteke.dohvatiPoslovneKorisnike("dat/poslovniKorisnici");
         pretraziPoslovnogKorisnika();
     }

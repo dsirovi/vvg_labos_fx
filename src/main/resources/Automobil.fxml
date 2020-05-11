@@ -3,7 +3,9 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.java.vjezbe.controllers.AutomobiliController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+            prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="hr.java.vjezbe.controllers.AutomobiliController">
     <top>
         <MenuBar BorderPane.alignment="CENTER">
             <menus>
@@ -11,17 +13,18 @@
                     <items>
                         <Menu mnemonicParsing="false" text="Usluge">
                             <items>
-                                <MenuItem mnemonicParsing="false" onAction="#prikaziPretraguUsluga" text="Pretraga" />
+                                <MenuItem mnemonicParsing="false" onAction="#prikaziPretraguUsluga" text="Pretraga"/>
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Automobili">
                             <items>
-                                <MenuItem mnemonicParsing="false" onAction="#prikaziPretraguAutomobila" text="Pretraga" />
+                                <MenuItem mnemonicParsing="false" onAction="#prikaziPretraguAutomobila"
+                                          text="Pretraga"/>
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Stanovi">
                             <items>
-                                <MenuItem mnemonicParsing="false" onAction="#prikaziPretraguStanova" text="Pretraga" />
+                                <MenuItem mnemonicParsing="false" onAction="#prikaziPretraguStanova" text="Pretraga"/>
                             </items>
                         </Menu>
                     </items>
@@ -30,12 +33,14 @@
                     <items>
                         <Menu mnemonicParsing="false" text="Privatni">
                             <items>
-                                <MenuItem mnemonicParsing="false" onAction="#prikaziPretraguPrivatnihKorisnika" text="Pretraga" />
+                                <MenuItem mnemonicParsing="false" onAction="#prikaziPretraguPrivatnihKorisnika"
+                                          text="Pretraga"/>
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Poslovni">
                             <items>
-                                <MenuItem mnemonicParsing="false" onAction="#prikaziPretraguPoslovnihKorisnika" text="Pretraga" />
+                                <MenuItem mnemonicParsing="false" onAction="#prikaziPretraguPoslovnihKorisnika"
+                                          text="Pretraga"/>
                             </items>
                         </Menu>
                     </items>
@@ -46,71 +51,72 @@
     <center>
         <GridPane BorderPane.alignment="CENTER">
             <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
             </rowConstraints>
             <children>
-                <Label text="Pretraga automobila" GridPane.columnSpan="2" GridPane.halignment="CENTER" />
+                <Label text="Pretraga automobila" GridPane.columnSpan="2" GridPane.halignment="CENTER"/>
                 <Label text="Naslov" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                     <GridPane.margin>
-                        <Insets right="50.0" />
+                        <Insets right="50.0"/>
                     </GridPane.margin>
                 </Label>
                 <Label text="Opis" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                     <GridPane.margin>
-                        <Insets right="50.0" />
+                        <Insets right="50.0"/>
                     </GridPane.margin>
                 </Label>
                 <Label text="Cijena" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
                     <GridPane.margin>
-                        <Insets right="50.0" />
+                        <Insets right="50.0"/>
                     </GridPane.margin>
                 </Label>
                 <TextField fx:id="naslovTextField" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <GridPane.margin>
-                        <Insets left="30.0" right="30.0" />
+                        <Insets left="30.0" right="30.0"/>
                     </GridPane.margin>
                 </TextField>
                 <TextField fx:id="opisTextField" GridPane.columnIndex="1" GridPane.rowIndex="2">
                     <GridPane.margin>
-                        <Insets left="30.0" right="30.0" />
+                        <Insets left="30.0" right="30.0"/>
                     </GridPane.margin>
                 </TextField>
                 <TextField fx:id="cijenaTextField" GridPane.columnIndex="1" GridPane.rowIndex="4">
                     <GridPane.margin>
-                        <Insets left="30.0" right="30.0" />
+                        <Insets left="30.0" right="30.0"/>
                     </GridPane.margin>
                 </TextField>
-                <Button mnemonicParsing="false" text="Pretraga" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-            <Label text="Snaga" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
-               <GridPane.margin>
-                  <Insets right="50.0" />
-               </GridPane.margin>
-            </Label>
-            <TextField fx:id="snagaTextField" GridPane.columnIndex="1" GridPane.rowIndex="3">
-               <GridPane.margin>
-                  <Insets left="30.0" right="30.0" />
-               </GridPane.margin>
-            </TextField>
+                <Button mnemonicParsing="false" onAction="#pretraziAutomobile" text="Pretraga" GridPane.columnSpan="2"
+                        GridPane.halignment="CENTER" GridPane.rowIndex="5"/>
+                <Label text="Snaga" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+                    <GridPane.margin>
+                        <Insets right="50.0"/>
+                    </GridPane.margin>
+                </Label>
+                <TextField fx:id="snagaTextField" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                    <GridPane.margin>
+                        <Insets left="30.0" right="30.0"/>
+                    </GridPane.margin>
+                </TextField>
             </children>
         </GridPane>
     </center>
     <bottom>
-        <TableView prefHeight="250.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+        <TableView fx:id="tableViewAutomobili" prefHeight="250.0" prefWidth="600.0" BorderPane.alignment="CENTER">
             <columns>
-                <TableColumn prefWidth="75.0" text="Naslov" />
-                <TableColumn prefWidth="75.0" text="Opis" />
-            <TableColumn prefWidth="75.0" text="Snaga" />
-                <TableColumn prefWidth="75.0" text="Cijena" />
-            <TableColumn prefWidth="75.0" text="Stanje" />
+                <TableColumn fx:id="tableColumnAutomobiliNaslov" prefWidth="75.0" text="Naslov"/>
+                <TableColumn fx:id="tableColumnAutomobiliOpis" prefWidth="75.0" text="Opis"/>
+                <TableColumn fx:id="tableColumnAutomobiliSnaga" prefWidth="75.0" text="Snaga"/>
+                <TableColumn fx:id="tableColumnAutomobiliCijena" prefWidth="75.0" text="Cijena"/>
+                <TableColumn fx:id="tableColumnAutomobiliStanje" prefWidth="75.0" text="Stanje"/>
             </columns>
         </TableView>
     </bottom>
