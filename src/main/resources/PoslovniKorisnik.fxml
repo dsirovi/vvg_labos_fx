@@ -106,10 +106,10 @@
     <bottom>
         <TableView fx:id="tableViewPoslovniKorisnik" prefHeight="250.0" prefWidth="600.0" BorderPane.alignment="CENTER">
             <columns>
-                <TableColumn fx:id="tableViewNazivPrivatnogKorisnika" prefWidth="75.0" text="Naziv" />
-                <TableColumn fx:id="tableViewEmailPrivatnogKorisnika" prefWidth="75.0" text="eMail" />
-                <TableColumn fx:id="tableViewWebPrivatnogKorisnika" prefWidth="75.0" text="Web" />
-                <TableColumn fx:id="tableViewTelefonPrivatnogKorisnika" prefWidth="75.0" text="Telefon" />
+                <TableColumn fx:id="tableViewNazivPoslovnogKorisnika" prefWidth="75.0" text="Naziv" />
+                <TableColumn fx:id="tableViewEmailPoslovnogKorisnika" prefWidth="75.0" text="eMail" />
+                <TableColumn fx:id="tableViewWebPoslovnogKorisnika" prefWidth="75.0" text="Web" />
+                <TableColumn fx:id="tableViewTelefonPoslovnogKorisnika" prefWidth="75.0" text="Telefon" />
             </columns>
         </TableView>
     </bottom>

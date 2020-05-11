@@ -1,7 +1,6 @@
 package hr.java.vjezbe.controllers;
 
 import hr.java.vjezbe.entitet.Korisnik;
-import hr.java.vjezbe.entitet.PrivatniKorisnik;
 import hr.java.vjezbe.util.Datoteke;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,14 +12,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class PrivatniKorisnikContoller {
 
-    List<PrivatniKorisnik> privatniKorisnik;
+    List<Korisnik> privatniKorisnik;
 
     @FXML
     private TextField imeTextField;
@@ -52,12 +50,12 @@ public class PrivatniKorisnikContoller {
     }
 
 
-    public void initialize() throws FileNotFoundException {
+    public void initialize() throws IOException {
         tableViewImePrivatnogKorisnika.setCellValueFactory(new PropertyValueFactory<Korisnik, String>("ime"));
         tableViewPrezimePrivatnogKorisnika.setCellValueFactory(new PropertyValueFactory<Korisnik, String>("prezime"));
         tableViewEmailPrivatnogKorisnika.setCellValueFactory(new PropertyValueFactory<Korisnik, String>("email"));
         tableViewTelefonPrivatnogKorisnika.setCellValueFactory(new PropertyValueFactory<Korisnik, String>("telefon"));
-        privatniKorisnik = Datoteke.dohvatiPrivatneKorisnike("dat/privatniKorisnici.txt");
+        privatniKorisnik = Datoteke.dohvatiPrivatneKorisnike("dat/privatniKorisnici");
         pretraziPrivatnogKorisnika();
     }
 
