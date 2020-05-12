@@ -3,34 +3,31 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.java.vjezbe.controllers.PoslovniKorisnikContoller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.java.vjezbe.controllers.UnosPoslovniKorisnikContoller">
     <top>
         <MenuBar BorderPane.alignment="CENTER">
             <Menu mnemonicParsing="false" text="Artikli">
                 <Menu mnemonicParsing="false" text="Usluge">
-                    <MenuItem mnemonicParsing="false" onAction="#prikaziPretraguUsluga" text="Pretraga"/>
-                    <MenuItem mnemonicParsing="false" onAction="#unesiUslugu" text="Unos"/>
+                    <MenuItem mnemonicParsing="false" onAction="#prikaziPretraguUsluga" text="Pretraga" />
+                    <MenuItem mnemonicParsing="false" onAction="#unesiUslugu" text="Unos" />
                 </Menu>
                 <Menu mnemonicParsing="false" text="Automobili">
-                    <MenuItem mnemonicParsing="false" onAction="#prikaziPretraguAutomobila"
-                              text="Pretraga"/>
-                    <MenuItem mnemonicParsing="false" onAction="#unesiAutomobil" text="Unos"/>
+                    <MenuItem mnemonicParsing="false" onAction="#prikaziPretraguAutomobila" text="Pretraga" />
+                    <MenuItem mnemonicParsing="false" onAction="#unesiAutomobil" text="Unos" />
                 </Menu>
                 <Menu mnemonicParsing="false" text="Stanovi">
-                    <MenuItem mnemonicParsing="false" onAction="#prikaziPretraguStanova" text="Pretraga"/>
-                    <MenuItem mnemonicParsing="false" onAction="#unesiStan" text="Unos"/>
+                    <MenuItem mnemonicParsing="false" onAction="#prikaziPretraguStanova" text="Pretraga" />
+                    <MenuItem mnemonicParsing="false" onAction="#unesiStan" text="Unos" />
                 </Menu>
             </Menu>
             <Menu mnemonicParsing="false" text="Korisnici">
                 <Menu mnemonicParsing="false" text="Privatni">
-                    <MenuItem mnemonicParsing="false" onAction="#prikaziPretraguPrivatnihKorisnika"
-                              text="Pretraga"/>
-                    <MenuItem mnemonicParsing="false" onAction="#unesiPrivatnogKorisnika" text="Unos"/>
+                    <MenuItem mnemonicParsing="false" onAction="#prikaziPretraguPrivatnihKorisnika" text="Pretraga" />
+                    <MenuItem mnemonicParsing="false" onAction="#unesiPrivatnogKorisnika" text="Unos" />
                 </Menu>
                 <Menu mnemonicParsing="false" text="Poslovni">
-                    <MenuItem mnemonicParsing="false" onAction="#prikaziPretraguPoslovnihKorisnika"
-                              text="Pretraga"/>
-                    <MenuItem mnemonicParsing="false" onAction="#unesiPoslovnogKorisnika" text="Unos"/>
+                    <MenuItem mnemonicParsing="false" onAction="#prikaziPretraguPoslovnihKorisnika" text="Pretraga" />
+                    <MenuItem mnemonicParsing="false" onAction="#unesiPoslovnogKorisnika" text="Unos" />
                 </Menu>
             </Menu>
         </MenuBar>
@@ -50,13 +47,18 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Label text="Pretraga poslovnih korisnika" GridPane.columnSpan="2" GridPane.halignment="CENTER" />
+                <Label text="Unos poslovnih korisnika" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" />
+                <Label text="eMail" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+                    <GridPane.margin>
+                        <Insets right="50.0" />
+                    </GridPane.margin>
+                </Label>
                 <Label text="Naziv" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                     <GridPane.margin>
                         <Insets right="50.0" />
                     </GridPane.margin>
                 </Label>
-                <Label text="eMail" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+                <Label text="Web" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
                     <GridPane.margin>
                         <Insets right="50.0" />
                     </GridPane.margin>
@@ -66,28 +68,23 @@
                         <Insets right="50.0" />
                     </GridPane.margin>
                 </Label>
-                <TextField fx:id="nazivTextField" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <Button mnemonicParsing="false" onAction="#spremiPoslovnogKorisnika" text="Unesi" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                <TextField fx:id="nazivPoslovnogKorisnika" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <GridPane.margin>
                         <Insets left="30.0" right="30.0" />
                     </GridPane.margin>
                 </TextField>
-                <TextField fx:id="emailTextField" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                <TextField fx:id="emailPoslovnogKorisnika" GridPane.columnIndex="1" GridPane.rowIndex="2">
                     <GridPane.margin>
                         <Insets left="30.0" right="30.0" />
                     </GridPane.margin>
                 </TextField>
-                <TextField fx:id="telefonTextField" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                <TextField fx:id="webPoslovnogKorisnik" GridPane.columnIndex="1" GridPane.rowIndex="3">
                     <GridPane.margin>
                         <Insets left="30.0" right="30.0" />
                     </GridPane.margin>
                 </TextField>
-                <Button mnemonicParsing="false" onAction="#pretraziPoslovnogKorisnika" text="Pretraga" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                <Label text="Web" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
-                    <GridPane.margin>
-                        <Insets right="50.0" />
-                    </GridPane.margin>
-                </Label>
-                <TextField fx:id="webTextField" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                <TextField fx:id="telefonPoslovnogKorisnika" GridPane.columnIndex="1" GridPane.rowIndex="4">
                     <GridPane.margin>
                         <Insets left="30.0" right="30.0" />
                     </GridPane.margin>
@@ -95,14 +92,4 @@
             </children>
         </GridPane>
     </center>
-    <bottom>
-        <TableView fx:id="tableViewPoslovniKorisnik" prefHeight="250.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-            <columns>
-                <TableColumn fx:id="tableViewNazivPoslovnogKorisnika" prefWidth="75.0" text="Naziv" />
-                <TableColumn fx:id="tableViewEmailPoslovnogKorisnika" prefWidth="75.0" text="eMail" />
-                <TableColumn fx:id="tableViewWebPoslovnogKorisnika" prefWidth="75.0" text="Web" />
-                <TableColumn fx:id="tableViewTelefonPoslovnogKorisnika" prefWidth="75.0" text="Telefon" />
-            </columns>
-        </TableView>
-    </bottom>
 </BorderPane>

@@ -13,6 +13,12 @@ public class PoslovniKorisnik extends Korisnik implements Serializable {
     private String naziv;
     private String web;
 
+    public PoslovniKorisnik(long id, String email, String telefon, String naziv, String web) {
+        super(id, email, telefon);
+        this.naziv = naziv;
+        this.web = web;
+    }
+
     public PoslovniKorisnik(String email, String telefon, String naziv, String web) {
         super(email, telefon);
         this.naziv = naziv;

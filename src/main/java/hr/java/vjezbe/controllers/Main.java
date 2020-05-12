@@ -12,7 +12,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            BorderPane root = (BorderPane) FXMLLoader.load(getClass().getResource("/Login.fxml"));
+            BorderPane root = FXMLLoader.load(getClass().getResource("/Login.fxml"));
             Scene scene = new Scene(root, 300, 150);
             stage = primaryStage;
             primaryStage.setScene(scene);

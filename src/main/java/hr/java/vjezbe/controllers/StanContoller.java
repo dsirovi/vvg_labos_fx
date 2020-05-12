@@ -65,7 +65,7 @@ public class StanContoller {
     public void prikaziPretraguUsluga() {
         BorderPane root;
         try {
-            root = (BorderPane) FXMLLoader.load(getClass().getResource("/Usluga.fxml"));
+            root =  FXMLLoader.load(getClass().getResource("/Usluga.fxml"));
             Main.setMainPage(root);
         } catch (IOException e) {
             e.printStackTrace();
@@ -75,7 +75,7 @@ public class StanContoller {
     public void prikaziPretraguAutomobila() {
         BorderPane root;
         try {
-            root = (BorderPane) FXMLLoader.load(getClass().getResource("/Automobil.fxml"));
+            root =  FXMLLoader.load(getClass().getResource("/Automobil.fxml"));
             Main.setMainPage(root);
         } catch (IOException e) {
             e.printStackTrace();
@@ -85,7 +85,7 @@ public class StanContoller {
     public void prikaziPretraguStanova() {
         BorderPane root;
         try {
-            root = (BorderPane) FXMLLoader.load(getClass().getResource("/Stan.fxml"));
+            root =  FXMLLoader.load(getClass().getResource("/Stan.fxml"));
             Main.setMainPage(root);
         } catch (IOException e) {
             e.printStackTrace();
@@ -95,7 +95,7 @@ public class StanContoller {
     public void prikaziPretraguPrivatnihKorisnika() {
         BorderPane root;
         try {
-            root = (BorderPane) FXMLLoader.load(getClass().getResource("/PrivatniKorisnik.fxml"));
+            root =  FXMLLoader.load(getClass().getResource("/PrivatniKorisnik.fxml"));
             Main.setMainPage(root);
         } catch (IOException e) {
             e.printStackTrace();
@@ -105,7 +105,57 @@ public class StanContoller {
     public void prikaziPretraguPoslovnihKorisnika() {
         BorderPane root;
         try {
-            root = (BorderPane) FXMLLoader.load(getClass().getResource("/PoslovniKorisnik.fxml"));
+            root =  FXMLLoader.load(getClass().getResource("/PoslovniKorisnik.fxml"));
+            Main.setMainPage(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void unesiPrivatnogKorisnika() {
+        BorderPane root;
+        try {
+            root =  FXMLLoader.load(getClass().getResource("/unosPrivatniKorisnik.fxml"));
+            Main.setMainPage(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void unesiPoslovnogKorisnika() {
+        BorderPane root;
+        try {
+            root =  FXMLLoader.load(getClass().getResource("/unosPoslovniKorisnik.fxml"));
+            Main.setMainPage(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void unesiUslugu() {
+        BorderPane root;
+        try {
+            root =  FXMLLoader.load(getClass().getResource("/unosUsluga.fxml"));
+            Main.setMainPage(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void unesiAutomobil() {
+        BorderPane root;
+        try {
+            root =  FXMLLoader.load(getClass().getResource("/unosAutomobil.fxml"));
+            Main.setMainPage(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void unesiStan() {
+        BorderPane root;
+        try {
+            root =  FXMLLoader.load(getClass().getResource("/unosStan.fxml"));
             Main.setMainPage(root);
         } catch (IOException e) {
             e.printStackTrace();

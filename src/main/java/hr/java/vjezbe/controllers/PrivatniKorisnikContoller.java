@@ -1,6 +1,7 @@
 package hr.java.vjezbe.controllers;
 
 import hr.java.vjezbe.entitet.Korisnik;
+import hr.java.vjezbe.entitet.PrivatniKorisnik;
 import hr.java.vjezbe.util.Datoteke;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 
 public class PrivatniKorisnikContoller {
 
-    List<Korisnik> privatniKorisnik;
+    List<PrivatniKorisnik> privatniKorisnik;
 
     @FXML
     private TextField imeTextField;
@@ -29,7 +30,7 @@ public class PrivatniKorisnikContoller {
     @FXML
     private TextField telefonTextField;
     @FXML
-    private TableView<Korisnik> tableViewPrivatniKorisnik;
+    private TableView<PrivatniKorisnik> tableViewPrivatniKorisnik;
     @FXML
     private TableColumn<Korisnik, String> tableViewImePrivatnogKorisnika;
     @FXML
@@ -40,17 +41,17 @@ public class PrivatniKorisnikContoller {
     private TableColumn<Korisnik, String> tableViewTelefonPrivatnogKorisnika;
 
     public void pretraziPrivatnogKorisnika() {
-        List<Korisnik> filtriraniPrivatniKorisnici = privatniKorisnik.stream().filter(p ->
+        List<PrivatniKorisnik> filtriraniPrivatniKorisnici = privatniKorisnik.stream().filter(p ->
                 p.dohvatiKontakt().toLowerCase().contains(imeTextField.getText())
-                && p.dohvatiKontakt().toLowerCase().contains(prezimeTextField.getText())
-                && p.dohvatiKontakt().toLowerCase().contains(emailTextField.getText())
-                && p.dohvatiKontakt().toLowerCase().contains(telefonTextField.getText())).collect(Collectors.toList());
-        ObservableList<Korisnik> pretraga = FXCollections.observableList(filtriraniPrivatniKorisnici);
-        tableViewPrivatniKorisnik.setItems(pretraga );
+                        && p.dohvatiKontakt().toLowerCase().contains(prezimeTextField.getText())
+                        && p.dohvatiKontakt().toLowerCase().contains(emailTextField.getText())
+                        && p.dohvatiKontakt().toLowerCase().contains(telefonTextField.getText())).collect(Collectors.toList());
+        ObservableList<PrivatniKorisnik> pretraga = FXCollections.observableList(filtriraniPrivatniKorisnici);
+        tableViewPrivatniKorisnik.setItems(pretraga);
     }
 
 
-    public void initialize() throws IOException {
+    public void initialize() {
         tableViewImePrivatnogKorisnika.setCellValueFactory(new PropertyValueFactory<Korisnik, String>("ime"));
         tableViewPrezimePrivatnogKorisnika.setCellValueFactory(new PropertyValueFactory<Korisnik, String>("prezime"));
         tableViewEmailPrivatnogKorisnika.setCellValueFactory(new PropertyValueFactory<Korisnik, String>("email"));
@@ -62,7 +63,7 @@ public class PrivatniKorisnikContoller {
     public void prikaziPretraguUsluga() {
         BorderPane root;
         try {
-            root = (BorderPane) FXMLLoader.load(getClass().getResource("/Usluga.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/Usluga.fxml"));
             Main.setMainPage(root);
         } catch (IOException e) {
             e.printStackTrace();
@@ -72,7 +73,7 @@ public class PrivatniKorisnikContoller {
     public void prikaziPretraguAutomobila() {
         BorderPane root;
         try {
-            root = (BorderPane) FXMLLoader.load(getClass().getResource("/Automobil.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/Automobil.fxml"));
             Main.setMainPage(root);
         } catch (IOException e) {
             e.printStackTrace();
@@ -82,7 +83,7 @@ public class PrivatniKorisnikContoller {
     public void prikaziPretraguStanova() {
         BorderPane root;
         try {
-            root = (BorderPane) FXMLLoader.load(getClass().getResource("/Stan.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/Stan.fxml"));
             Main.setMainPage(root);
         } catch (IOException e) {
             e.printStackTrace();
@@ -92,7 +93,7 @@ public class PrivatniKorisnikContoller {
     public void prikaziPretraguPrivatnihKorisnika() {
         BorderPane root;
         try {
-            root = (BorderPane) FXMLLoader.load(getClass().getResource("/PrivatniKorisnik.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/PrivatniKorisnik.fxml"));
             Main.setMainPage(root);
         } catch (IOException e) {
             e.printStackTrace();
@@ -102,7 +103,57 @@ public class PrivatniKorisnikContoller {
     public void prikaziPretraguPoslovnihKorisnika() {
         BorderPane root;
         try {
-            root = (BorderPane) FXMLLoader.load(getClass().getResource("/PoslovniKorisnik.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/PoslovniKorisnik.fxml"));
+            Main.setMainPage(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void unesiPrivatnogKorisnika() {
+        BorderPane root;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/unosPrivatniKorisnik.fxml"));
+            Main.setMainPage(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void unesiPoslovnogKorisnika() {
+        BorderPane root;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/unosPoslovniKorisnik.fxml"));
+            Main.setMainPage(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void unesiUslugu() {
+        BorderPane root;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/unosUsluga.fxml"));
+            Main.setMainPage(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void unesiAutomobil() {
+        BorderPane root;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/unosAutomobil.fxml"));
+            Main.setMainPage(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void unesiStan() {
+        BorderPane root;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/unosStan.fxml"));
             Main.setMainPage(root);
         } catch (IOException e) {
             e.printStackTrace();

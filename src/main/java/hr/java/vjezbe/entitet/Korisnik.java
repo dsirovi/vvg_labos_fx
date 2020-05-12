@@ -10,6 +10,17 @@ public abstract class Korisnik extends Entitet{
     private String email;
     private String telefon;
 
+    public Korisnik(long id, String email, String telefon) {
+        super(id);
+        this.email = email;
+        this.telefon = telefon;
+    }
+
+    public Korisnik(long id, String email) {
+        super(id);
+        this.email = email;
+    }
+
     public Korisnik(String email, String telefon) {
         super(nextId++);
         this.email = email;

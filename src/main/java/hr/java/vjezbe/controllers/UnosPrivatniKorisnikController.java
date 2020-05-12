@@ -1,62 +1,74 @@
 package hr.java.vjezbe.controllers;
 
-import hr.java.vjezbe.entitet.Korisnik;
-import hr.java.vjezbe.entitet.PoslovniKorisnik;
+import hr.java.vjezbe.entitet.Entitet;
+import hr.java.vjezbe.entitet.PrivatniKorisnik;
 import hr.java.vjezbe.util.Datoteke;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.OptionalLong;
 
-public class PoslovniKorisnikContoller {
-
-    List<PoslovniKorisnik> poslovniKorisnik;
+public class UnosPrivatniKorisnikController {
 
     @FXML
-    private TextField nazivTextField;
+    private TextField imePrivatnogKorisnika;
     @FXML
-    private TextField emailTextField;
+    private TextField prezimePrivatnogKorisnika;
     @FXML
-    private TextField webTextField;
+    private TextField emailPrivatnogKorisnika;
     @FXML
-    private TextField telefonTextField;
-    @FXML
-    private TableView<PoslovniKorisnik> tableViewPoslovniKorisnik;
-    @FXML
-    private TableColumn<Korisnik, String> tableViewNazivPoslovnogKorisnika;
-    @FXML
-    private TableColumn<Korisnik, String> tableViewEmailPoslovnogKorisnika;
-    @FXML
-    private TableColumn<Korisnik, String> tableViewWebPoslovnogKorisnika;
-    @FXML
-    private TableColumn<Korisnik, String> tableViewTelefonPoslovnogKorisnika;
+    private TextField telefonPrivatnogKorisnika;
 
-    public void pretraziPoslovnogKorisnika() {
-        List<PoslovniKorisnik> filtriraniPoslovniKorisnici = poslovniKorisnik.stream().filter(p ->
-                p.dohvatiKontakt().toLowerCase().contains(nazivTextField.getText())
-                        && p.dohvatiKontakt().toLowerCase().contains(webTextField.getText())
-                        && p.dohvatiKontakt().toLowerCase().contains(emailTextField.getText())
-                        && p.dohvatiKontakt().toLowerCase().contains(telefonTextField.getText())).collect(Collectors.toList());
-        ObservableList<PoslovniKorisnik> pretraga = FXCollections.observableList(filtriraniPoslovniKorisnici);
-        tableViewPoslovniKorisnik.setItems(pretraga);
-    }
+    public void spremiPrivatnogKorisnika() {
 
-    public void initialize() {
-        tableViewNazivPoslovnogKorisnika.setCellValueFactory(new PropertyValueFactory<>("naziv"));
-        tableViewEmailPoslovnogKorisnika.setCellValueFactory(new PropertyValueFactory<>("email"));
-        tableViewWebPoslovnogKorisnika.setCellValueFactory(new PropertyValueFactory<>("web"));
-        tableViewTelefonPoslovnogKorisnika.setCellValueFactory(new PropertyValueFactory<>("telefon"));
-        poslovniKorisnik = Datoteke.dohvatiPoslovneKorisnike("dat/poslovniKorisnici");
-        pretraziPoslovnogKorisnika();
+        if (imePrivatnogKorisnika.getText().isBlank() || prezimePrivatnogKorisnika.getText().isBlank() || emailPrivatnogKorisnika.getText().isBlank()
+                || telefonPrivatnogKorisnika.getText().isBlank()) {
+            Alert upozorenje = new Alert(Alert.AlertType.ERROR);
+            upozorenje.setTitle("Pogreska pri unosu");
+            upozorenje.setHeaderText("Provjerite podatke o unosu korisnika");
+            String opis = "Nedostaje podatak za: \n";
+            if (imePrivatnogKorisnika.getText().isBlank())
+                opis += "ime korisnika, \n";
+            if (prezimePrivatnogKorisnika.getText().isBlank())
+                opis += "prezime korisnika, \n";
+            if (emailPrivatnogKorisnika.getText().isBlank())
+                opis += "email korisnika, \n";
+            if (telefonPrivatnogKorisnika.getText().isBlank())
+                opis += "telefon korisnika ";
+            upozorenje.setContentText(opis);
+            upozorenje.showAndWait();
+        } else {
+
+            List<PrivatniKorisnik> listItems = Datoteke.dohvatiPrivatneKorisnike("dat/privatniKorisnici");
+            OptionalLong maxId = listItems.stream().mapToLong(Entitet::getId).max();
+            PrivatniKorisnik privatniKorisnik = new PrivatniKorisnik(maxId.getAsLong() + 1, emailPrivatnogKorisnika.getText(), telefonPrivatnogKorisnika.getText(), imePrivatnogKorisnika.getText(), prezimePrivatnogKorisnika.getText());
+            listItems.add(privatniKorisnik);
+
+            String FILE_NAME = PretragaController.getLokacijaDatoteke() + "privatniKorisnici";
+            try (PrintWriter out = new PrintWriter(new FileWriter(new File(FILE_NAME), true))) {
+                out.println(privatniKorisnik.getId());
+                out.println(privatniKorisnik.getIme());
+                out.println(privatniKorisnik.getPrezime());
+                out.println(privatniKorisnik.getEmail());
+                out.println(privatniKorisnik.getTelefon());
+            } catch (IOException e) {
+                System.err.println(e);
+            }
+
+            Alert upozorenje = new Alert(Alert.AlertType.CONFIRMATION);
+            upozorenje.setTitle("Uspjesan unos");
+            upozorenje.setHeaderText("Podaci o korisniku su uspjesno pohranjeni");
+            upozorenje.showAndWait();
+        }
+
     }
 
     public void prikaziPretraguUsluga() {

@@ -10,8 +10,8 @@ import java.util.List;
 
 public class Datoteke {
 
-    public static List<Korisnik> dohvatiPrivatneKorisnike(String lokacijaDatoteke) {
-        List<Korisnik> privatniKorisnik = new ArrayList<>();
+    public static List<PrivatniKorisnik> dohvatiPrivatneKorisnike(String lokacijaDatoteke) {
+        List<PrivatniKorisnik> privatniKorisnik = new ArrayList<>();
         try (BufferedReader in = new BufferedReader(new FileReader(lokacijaDatoteke))) {
             while (in.readLine() != null) {
                 String ime = in.readLine();
@@ -26,8 +26,8 @@ public class Datoteke {
         return privatniKorisnik;
     }
 
-    public static List<Korisnik> dohvatiPoslovneKorisnike(String lokacijaDatoteke) {
-        List<Korisnik> poslovniKorisnik = new ArrayList<>();
+    public static List<PoslovniKorisnik> dohvatiPoslovneKorisnike(String lokacijaDatoteke) {
+        List<PoslovniKorisnik> poslovniKorisnik = new ArrayList<>();
         try (BufferedReader in = new BufferedReader(new FileReader(lokacijaDatoteke))) {
             while (in.readLine() != null) {
                 String naziv = in.readLine();

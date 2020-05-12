@@ -3,7 +3,7 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.java.vjezbe.controllers.AutomobiliController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.java.vjezbe.controllers.UnosStanovaController">
     <top>
         <MenuBar BorderPane.alignment="CENTER">
             <Menu mnemonicParsing="false" text="Artikli">
@@ -48,24 +48,31 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Label text="Pretraga automobila" GridPane.columnSpan="2" GridPane.halignment="CENTER" />
-                <Label text="Naslov" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
-                    <GridPane.margin>
-                        <Insets right="50.0" />
-                    </GridPane.margin>
-                </Label>
+                <Label text="Unos stanova" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" />
                 <Label text="Opis" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                     <GridPane.margin>
                         <Insets right="50.0" />
                     </GridPane.margin>
                 </Label>
-                <Label text="Cijena" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
+                <Label text="Naslov" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                     <GridPane.margin>
                         <Insets right="50.0" />
                     </GridPane.margin>
                 </Label>
+                <Label text="Kvadratura" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+                    <GridPane.margin>
+                        <Insets right="50.0" />
+                    </GridPane.margin>
+                </Label>
+                <Label text="Stanje" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
+                    <GridPane.margin>
+                        <Insets right="50.0" />
+                    </GridPane.margin>
+                </Label>
+                <Button mnemonicParsing="false" onAction="#spremiStan" text="Unesi" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
                 <TextField fx:id="naslovTextField" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <GridPane.margin>
                         <Insets left="30.0" right="30.0" />
@@ -76,34 +83,27 @@
                         <Insets left="30.0" right="30.0" />
                     </GridPane.margin>
                 </TextField>
+                <TextField fx:id="kvadraturaTextField" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                    <GridPane.margin>
+                        <Insets left="30.0" right="30.0" />
+                    </GridPane.margin>
+                </TextField>
                 <TextField fx:id="cijenaTextField" GridPane.columnIndex="1" GridPane.rowIndex="4">
                     <GridPane.margin>
                         <Insets left="30.0" right="30.0" />
                     </GridPane.margin>
                 </TextField>
-                <Button mnemonicParsing="false" onAction="#pretraziAutomobile" text="Pretraga" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                <Label text="Snaga" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+                <Label text="Cijena" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
                     <GridPane.margin>
                         <Insets right="50.0" />
                     </GridPane.margin>
                 </Label>
-                <TextField fx:id="snagaTextField" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                <ComboBox fx:id="stanjeComboBox" prefWidth="240.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                     <GridPane.margin>
-                        <Insets left="30.0" right="30.0" />
+                        <Insets left="30.0" />
                     </GridPane.margin>
-                </TextField>
+                </ComboBox>
             </children>
         </GridPane>
     </center>
-    <bottom>
-        <TableView fx:id="tableViewAutomobili" prefHeight="250.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-            <columns>
-                <TableColumn fx:id="tableColumnAutomobiliNaslov" prefWidth="75.0" text="Naslov" />
-                <TableColumn fx:id="tableColumnAutomobiliOpis" prefWidth="75.0" text="Opis" />
-                <TableColumn fx:id="tableColumnAutomobiliSnaga" prefWidth="75.0" text="Snaga" />
-                <TableColumn fx:id="tableColumnAutomobiliCijena" prefWidth="75.0" text="Cijena" />
-                <TableColumn fx:id="tableColumnAutomobiliStanje" prefWidth="75.0" text="Stanje" />
-            </columns>
-        </TableView>
-    </bottom>
 </BorderPane>
