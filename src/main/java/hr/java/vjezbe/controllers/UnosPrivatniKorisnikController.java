@@ -1,22 +1,22 @@
 package hr.java.vjezbe.controllers;
 
+import hr.java.vjezbe.baze.BazaPodataka;
 import hr.java.vjezbe.entitet.Entitet;
 import hr.java.vjezbe.entitet.PrivatniKorisnik;
-import hr.java.vjezbe.util.Datoteke;
+import hr.java.vjezbe.iznimke.BazaPodatakaException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import java.util.OptionalLong;
 
 public class UnosPrivatniKorisnikController {
+
+    List<PrivatniKorisnik> privatniKorisnici = BazaPodataka.dohvatiPrivatnogKorisnikaPremaKriterijima(null);
 
     @FXML
     private TextField imePrivatnogKorisnika;
@@ -26,6 +26,9 @@ public class UnosPrivatniKorisnikController {
     private TextField emailPrivatnogKorisnika;
     @FXML
     private TextField telefonPrivatnogKorisnika;
+
+    public UnosPrivatniKorisnikController() throws BazaPodatakaException {
+    }
 
     public void spremiPrivatnogKorisnika() {
 
@@ -46,23 +49,22 @@ public class UnosPrivatniKorisnikController {
             upozorenje.setContentText(opis);
             upozorenje.showAndWait();
         } else {
+            OptionalLong maxId = privatniKorisnici.stream().mapToLong(Entitet::getId).max();
 
-            List<PrivatniKorisnik> listItems = Datoteke.dohvatiPrivatneKorisnike("dat/privatniKorisnici");
-            OptionalLong maxId = listItems.stream().mapToLong(Entitet::getId).max();
             PrivatniKorisnik privatniKorisnik = new PrivatniKorisnik(maxId.getAsLong() + 1, emailPrivatnogKorisnika.getText(), telefonPrivatnogKorisnika.getText(), imePrivatnogKorisnika.getText(), prezimePrivatnogKorisnika.getText());
-            listItems.add(privatniKorisnik);
+            privatniKorisnici.add(privatniKorisnik);
 
-            String FILE_NAME = PretragaController.getLokacijaDatoteke() + "privatniKorisnici";
-            try (PrintWriter out = new PrintWriter(new FileWriter(new File(FILE_NAME), true))) {
-                out.println(privatniKorisnik.getId());
-                out.println(privatniKorisnik.getIme());
-                out.println(privatniKorisnik.getPrezime());
-                out.println(privatniKorisnik.getEmail());
-                out.println(privatniKorisnik.getTelefon());
-            } catch (IOException e) {
-                System.err.println(e);
+            try {
+                BazaPodataka.pohraniPrivatnogKorisnika(privatniKorisnik);
+            } catch (BazaPodatakaException e) {
+                Alert upozorenje = new Alert(Alert.AlertType.ERROR);
+                upozorenje.setTitle("Greska");
+                upozorenje.setContentText(e.getMessage());
+                upozorenje.showAndWait();
+                e.printStackTrace();
+                return;
             }
-
+            privatniKorisnici.add(privatniKorisnik);
             Alert upozorenje = new Alert(Alert.AlertType.CONFIRMATION);
             upozorenje.setTitle("Uspjesan unos");
             upozorenje.setHeaderText("Podaci o korisniku su uspjesno pohranjeni");

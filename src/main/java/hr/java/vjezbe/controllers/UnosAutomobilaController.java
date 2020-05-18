@@ -1,9 +1,11 @@
 package hr.java.vjezbe.controllers;
 
+import hr.java.vjezbe.baze.BazaPodataka;
 import hr.java.vjezbe.entitet.Automobil;
 import hr.java.vjezbe.entitet.Entitet;
 import hr.java.vjezbe.entitet.Stanje;
-import hr.java.vjezbe.util.Datoteke;
+import hr.java.vjezbe.entitet.Usluga;
+import hr.java.vjezbe.iznimke.BazaPodatakaException;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,10 +14,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
@@ -23,6 +22,8 @@ import java.util.OptionalLong;
 import java.util.stream.Collectors;
 
 public class UnosAutomobilaController {
+
+    public List<Automobil> listItems = BazaPodataka.dohvatiAutomobilePremaKriterijima(null);
 
     @FXML
     private TextField naslovTextField;
@@ -34,6 +35,10 @@ public class UnosAutomobilaController {
     private ComboBox<Stanje> stanjeComboBox;
     @FXML
     private TextField cijenaTextField;
+
+    public UnosAutomobilaController() throws BazaPodatakaException {
+    }
+
 
     public void initialize(){
 
@@ -64,23 +69,21 @@ public class UnosAutomobilaController {
             upozorenje.showAndWait();
         } else {
 
-            List<Automobil> listItems = Datoteke.dohvatiAutomobile("dat/automobili");
             OptionalLong maxId = listItems.stream().mapToLong(Entitet::getId).max();
             Automobil auto = new Automobil(maxId.getAsLong() + 1, naslovTextField.getText(), opisTextField.getText(), new BigDecimal(cijenaTextField.getText()), new BigDecimal(snagaTextField.getText()), (Stanje) stanjeComboBox.getValue());
             listItems.add(auto);
 
-            String FILE_NAME = PretragaController.getLokacijaDatoteke() + "automobili";
-            try (PrintWriter out = new PrintWriter(new FileWriter(new File(FILE_NAME), true))) {
-                out.println(auto.getId());
-                out.println(auto.getNaslov());
-                out.println(auto.getOpis());
-                out.println(auto.getSnagaKs());
-                out.println(auto.getCijena());
-                out.println(auto.getStanje().getId());
-            } catch (IOException e) {
-                System.err.println(e);
+            try {
+                BazaPodataka.pohraniNoviAutomobil(auto);
+            } catch (BazaPodatakaException e) {
+                Alert upozorenje = new Alert(Alert.AlertType.ERROR);
+                upozorenje.setTitle("Greska");
+                upozorenje.setContentText(e.getMessage());
+                upozorenje.showAndWait();
+                e.printStackTrace();
+                return;
             }
-
+            listItems.add(auto);
             Alert upozorenje = new Alert(Alert.AlertType.CONFIRMATION);
             upozorenje.setTitle("Uspjesan unos");
             upozorenje.setHeaderText("Podaci o automobilu su uspjesno pohranjeni");

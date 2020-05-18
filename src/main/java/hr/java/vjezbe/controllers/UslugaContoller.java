@@ -1,7 +1,9 @@
 package hr.java.vjezbe.controllers;
 
+import hr.java.vjezbe.baze.BazaPodataka;
 import hr.java.vjezbe.entitet.Artikl;
-import hr.java.vjezbe.util.Datoteke;
+import hr.java.vjezbe.entitet.Usluga;
+import hr.java.vjezbe.iznimke.BazaPodatakaException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -18,7 +20,7 @@ import java.util.stream.Collectors;
 
 public class UslugaContoller {
 
-    List<Artikl> usluge;
+    List<Usluga> usluge;
     
     @FXML
     private TextField naslovTextField;
@@ -34,16 +36,8 @@ public class UslugaContoller {
     private TableColumn<Artikl, String> tableViewOpisUsluge;
     @FXML
     private TableColumn<Artikl, String> tableViewCijenaUsluge;
-
-    public void initialize() {
-
-        tableViewNazivUsluge.setCellValueFactory(new PropertyValueFactory<Artikl, String>("naslov"));
-        tableViewOpisUsluge.setCellValueFactory(new PropertyValueFactory<Artikl, String>("opis"));
-        tableViewCijenaUsluge.setCellValueFactory(new PropertyValueFactory<Artikl, String>("cijena"));
-        usluge = Datoteke.dohvatiUsluge("dat/usluge");
-        pretraziUsluge();
-
-    }
+    @FXML
+    private TableColumn<Artikl, String> tableColumnUslugeStanje;
 
     public void pretraziUsluge() {
         List<Artikl> filtriraneUsluge = usluge.stream().filter(p ->
@@ -52,6 +46,17 @@ public class UslugaContoller {
                         && p.getCijena().toString().toLowerCase().contains(cijenaTextField.getText())).collect(Collectors.toList());
         ObservableList<Artikl> pretraga = FXCollections.observableList(filtriraneUsluge);
         tableViewUsluge.setItems(pretraga);
+    }
+
+    public void initialize() throws BazaPodatakaException {
+
+        tableViewNazivUsluge.setCellValueFactory(new PropertyValueFactory<Artikl, String>("naslov"));
+        tableViewOpisUsluge.setCellValueFactory(new PropertyValueFactory<Artikl, String>("opis"));
+        tableViewCijenaUsluge.setCellValueFactory(new PropertyValueFactory<Artikl, String>("cijena"));
+        tableColumnUslugeStanje.setCellValueFactory(new PropertyValueFactory<>("stanje"));
+        usluge = BazaPodataka.dohvatiUslugePremaKriterijima((Usluga) usluge);
+        pretraziUsluge();
+
     }
 
     public void prikaziPretraguUsluga() {

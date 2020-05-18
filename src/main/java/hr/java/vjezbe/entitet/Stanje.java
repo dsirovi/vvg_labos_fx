@@ -14,6 +14,9 @@ public enum Stanje {
         this.naziv = naziv;
     }
 
+    public  static Stanje odrediStanje(String stanje){
+        return valueOf(stanje);
+    }
     public String getNaziv() {
         return naziv;
     }

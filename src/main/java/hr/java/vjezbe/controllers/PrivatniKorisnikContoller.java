@@ -1,8 +1,9 @@
 package hr.java.vjezbe.controllers;
 
+import hr.java.vjezbe.baze.BazaPodataka;
 import hr.java.vjezbe.entitet.Korisnik;
 import hr.java.vjezbe.entitet.PrivatniKorisnik;
-import hr.java.vjezbe.util.Datoteke;
+import hr.java.vjezbe.iznimke.BazaPodatakaException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -51,12 +52,12 @@ public class PrivatniKorisnikContoller {
     }
 
 
-    public void initialize() {
+    public void initialize() throws BazaPodatakaException {
         tableViewImePrivatnogKorisnika.setCellValueFactory(new PropertyValueFactory<Korisnik, String>("ime"));
         tableViewPrezimePrivatnogKorisnika.setCellValueFactory(new PropertyValueFactory<Korisnik, String>("prezime"));
         tableViewEmailPrivatnogKorisnika.setCellValueFactory(new PropertyValueFactory<Korisnik, String>("email"));
         tableViewTelefonPrivatnogKorisnika.setCellValueFactory(new PropertyValueFactory<Korisnik, String>("telefon"));
-        privatniKorisnik = Datoteke.dohvatiPrivatneKorisnike("dat/privatniKorisnici");
+        privatniKorisnik = BazaPodataka.dohvatiPrivatnogKorisnikaPremaKriterijima((PrivatniKorisnik) privatniKorisnik);
         pretraziPrivatnogKorisnika();
     }
 

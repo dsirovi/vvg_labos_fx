@@ -1,8 +1,9 @@
 package hr.java.vjezbe.controllers;
 
+import hr.java.vjezbe.baze.BazaPodataka;
 import hr.java.vjezbe.entitet.Artikl;
 import hr.java.vjezbe.entitet.Automobil;
-import hr.java.vjezbe.util.Datoteke;
+import hr.java.vjezbe.iznimke.BazaPodatakaException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -52,13 +53,13 @@ public class AutomobiliController {
         tableViewAutomobili.setItems(pretraga);
     }
 
-    public void initialize() throws IOException {
+    public void initialize() throws BazaPodatakaException {
         tableColumnAutomobiliNaslov.setCellValueFactory(new PropertyValueFactory<Artikl, String>("naslov"));
         tableColumnAutomobiliOpis.setCellValueFactory(new PropertyValueFactory<Artikl, String>("opis"));
         tableColumnAutomobiliSnaga.setCellValueFactory(new PropertyValueFactory<Artikl, String>("snagaKs"));
         tableColumnAutomobiliCijena.setCellValueFactory(new PropertyValueFactory<Artikl, String>("cijena"));
         tableColumnAutomobiliStanje.setCellValueFactory(new PropertyValueFactory<Artikl, String>("stanje"));
-        automobil = Datoteke.dohvatiAutomobile("dat/automobili");
+        automobil = BazaPodataka.dohvatiAutomobilePremaKriterijima((Automobil) automobil);
         pretraziAutomobile();
     }
 

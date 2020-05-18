@@ -1,22 +1,22 @@
 package hr.java.vjezbe.controllers;
 
+import hr.java.vjezbe.baze.BazaPodataka;
 import hr.java.vjezbe.entitet.Entitet;
 import hr.java.vjezbe.entitet.PoslovniKorisnik;
-import hr.java.vjezbe.util.Datoteke;
+import hr.java.vjezbe.iznimke.BazaPodatakaException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import java.util.OptionalLong;
 
 public class UnosPoslovniKorisnikContoller {
+
+    List<PoslovniKorisnik> poslovniKorisnici = BazaPodataka.dohvatiPoslovnogKorisnikaPremaKriterijima(null);
 
     @FXML
     private TextField nazivPoslovnogKorisnika;
@@ -26,6 +26,9 @@ public class UnosPoslovniKorisnikContoller {
     private TextField webPoslovnogKorisnik;
     @FXML
     private TextField telefonPoslovnogKorisnika;
+
+    public UnosPoslovniKorisnikContoller() throws BazaPodatakaException {
+    }
 
     public void spremiPoslovnogKorisnika() {
 
@@ -46,23 +49,23 @@ public class UnosPoslovniKorisnikContoller {
             upozorenje.setContentText(opis);
             upozorenje.showAndWait();
         } else {
+            OptionalLong maxId = poslovniKorisnici.stream().mapToLong(Entitet::getId).max();
 
-            List<PoslovniKorisnik> listItems = Datoteke.dohvatiPoslovneKorisnike("dat/poslovniKorisnici");
-            OptionalLong maxId = listItems.stream().mapToLong(Entitet::getId).max();
-            PoslovniKorisnik privatniKorisnik = new PoslovniKorisnik(maxId.getAsLong() + 1, emailPoslovnogKorisnika.getText(), telefonPoslovnogKorisnika.getText(), nazivPoslovnogKorisnika.getText(), webPoslovnogKorisnik.getText());
-            listItems.add(privatniKorisnik);
+            PoslovniKorisnik noviPoslovniKorisnik = new PoslovniKorisnik(maxId.getAsLong() + 1, emailPoslovnogKorisnika.getText(), telefonPoslovnogKorisnika.getText(), nazivPoslovnogKorisnika.getText(), webPoslovnogKorisnik.getText());
+            poslovniKorisnici.add(noviPoslovniKorisnik);
 
-            String FILE_NAME = PretragaController.getLokacijaDatoteke() + "poslovniKorisnici";
-            try (PrintWriter out = new PrintWriter(new FileWriter(new File(FILE_NAME), true))) {
-                out.println(privatniKorisnik.getId());
-                out.println(privatniKorisnik.getNaziv());
-                out.println(privatniKorisnik.getEmail());
-                out.println(privatniKorisnik.getWeb());
-                out.println(privatniKorisnik.getTelefon());
-            } catch (IOException e) {
-                System.err.println(e);
+
+            try {
+                BazaPodataka.pohraniPoslovnogKorisnika(noviPoslovniKorisnik);
+            } catch (BazaPodatakaException e) {
+                Alert upozorenje = new Alert(Alert.AlertType.ERROR);
+                upozorenje.setTitle("Greska");
+                upozorenje.setContentText(e.getMessage());
+                upozorenje.showAndWait();
+                e.printStackTrace();
+                return;
             }
-
+            poslovniKorisnici.add(noviPoslovniKorisnik);
             Alert upozorenje = new Alert(Alert.AlertType.CONFIRMATION);
             upozorenje.setTitle("Uspjesan unos");
             upozorenje.setHeaderText("Podaci o korisniku su uspjesno pohranjeni");
