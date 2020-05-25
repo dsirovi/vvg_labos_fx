@@ -13,6 +13,16 @@ public class PretragaController {
         return lokacijaDatoteke;
     }
 
+    public void prikaziPretraguProdaja() {
+        BorderPane root;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/Prodaja.fxml"));
+            Main.setMainPage(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void prikaziPretraguUsluga() {
         BorderPane root;
         try {

@@ -1,7 +1,6 @@
 package hr.java.vjezbe.controllers;
 
 import hr.java.vjezbe.baze.BazaPodataka;
-import hr.java.vjezbe.entitet.Automobil;
 import hr.java.vjezbe.entitet.Entitet;
 import hr.java.vjezbe.entitet.Stan;
 import hr.java.vjezbe.entitet.Stanje;
@@ -90,6 +89,16 @@ public class UnosStanovaController {
             upozorenje.showAndWait();
         }
 
+    }
+
+    public void prikaziPretraguProdaja() {
+        BorderPane root;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/Prodaja.fxml"));
+            Main.setMainPage(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void prikaziPretraguUsluga() {

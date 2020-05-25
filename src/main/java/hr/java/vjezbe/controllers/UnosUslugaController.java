@@ -1,7 +1,6 @@
 package hr.java.vjezbe.controllers;
 
 import hr.java.vjezbe.baze.BazaPodataka;
-import hr.java.vjezbe.entitet.Artikl;
 import hr.java.vjezbe.entitet.Entitet;
 import hr.java.vjezbe.entitet.Stanje;
 import hr.java.vjezbe.entitet.Usluga;
@@ -84,6 +83,16 @@ public class UnosUslugaController {
             upozorenje.setTitle("Uspjesan unos");
             upozorenje.setHeaderText("Podaci o usluzi su uspjesno pohranjeni");
             upozorenje.showAndWait();
+        }
+    }
+
+    public void prikaziPretraguProdaja() {
+        BorderPane root;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/Prodaja.fxml"));
+            Main.setMainPage(root);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

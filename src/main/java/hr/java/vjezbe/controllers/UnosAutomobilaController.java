@@ -4,7 +4,6 @@ import hr.java.vjezbe.baze.BazaPodataka;
 import hr.java.vjezbe.entitet.Automobil;
 import hr.java.vjezbe.entitet.Entitet;
 import hr.java.vjezbe.entitet.Stanje;
-import hr.java.vjezbe.entitet.Usluga;
 import hr.java.vjezbe.iznimke.BazaPodatakaException;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -88,6 +87,16 @@ public class UnosAutomobilaController {
             upozorenje.setTitle("Uspjesan unos");
             upozorenje.setHeaderText("Podaci o automobilu su uspjesno pohranjeni");
             upozorenje.showAndWait();
+        }
+    }
+
+    public void prikaziPretraguProdaja() {
+        BorderPane root;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/Prodaja.fxml"));
+            Main.setMainPage(root);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.java.vjezbe.controllers.UslugaContoller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.java.vjezbe.controllers.ProdajaController">
     <top>
         <MenuBar BorderPane.alignment="CENTER">
             <Menu mnemonicParsing="false" text="Artikli">
@@ -30,12 +30,12 @@
                     <MenuItem mnemonicParsing="false" onAction="#unesiPoslovnogKorisnika" text="Unos" />
                 </Menu>
             </Menu>
-            <Menu mnemonicParsing="false" text="Prodaja">
-                <items>
-                    <MenuItem mnemonicParsing="false" onAction="#prikaziPretraguProdaja" text="Pretraga" />
-                    <MenuItem mnemonicParsing="false" text="Unos" />
-                </items>
-            </Menu>
+         <Menu mnemonicParsing="false" text="Prodaja">
+            <items>
+               <MenuItem mnemonicParsing="false" onAction="#prikaziPretraguProdaja" text="Pretraga" />
+               <MenuItem mnemonicParsing="false" text="Unos" />
+            </items>
+         </Menu>
         </MenuBar>
     </top>
    <center>
@@ -52,48 +52,35 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Pretraga usluga" GridPane.columnSpan="2" GridPane.halignment="CENTER" />
-            <Label text="Naslov" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+            <Label text="Pretraga prodaja" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" />
+            <Label text="Artikl" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets right="50.0" />
                </GridPane.margin>
             </Label>
-            <Label text="Opis" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+            <Label text="Korisnik" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets right="50.0" />
                </GridPane.margin>
             </Label>
-            <Label text="Cijena" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+            <Label text="Datum" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets right="50.0" />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="naslovTextField" GridPane.columnIndex="1" GridPane.rowIndex="1">
-               <GridPane.margin>
-                  <Insets left="30.0" right="30.0" />
-               </GridPane.margin>
-            </TextField>
-            <TextField fx:id="opisTextField" GridPane.columnIndex="1" GridPane.rowIndex="2">
-               <GridPane.margin>
-                  <Insets left="30.0" right="30.0" />
-               </GridPane.margin>
-            </TextField>
-            <TextField fx:id="cijenaTextField" GridPane.columnIndex="1" GridPane.rowIndex="3">
-               <GridPane.margin>
-                  <Insets left="30.0" right="30.0" />
-               </GridPane.margin>
-            </TextField>
-            <Button mnemonicParsing="false" onAction="#pretraziUsluge" text="Pretraga" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+            <Button mnemonicParsing="false" onAction="#pretraziProdaju" prefWidth="100.0" text="Pretrazi" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+            <ComboBox fx:id="artiklCombobox" prefWidth="240.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+            <ComboBox fx:id="korinsnikCombobox" prefWidth="240.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+            <DatePicker fx:id="datumDatePicker" prefWidth="250.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
          </children>
       </GridPane>
    </center>
    <bottom>
-      <TableView fx:id="tableViewUsluge" prefHeight="250.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+      <TableView fx:id="tableViewProdaja" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <columns>
-          <TableColumn fx:id="tableViewNazivUsluge" prefWidth="75.0" text="Naslov" />
-          <TableColumn fx:id="tableViewOpisUsluge" prefWidth="75.0" text="Opis" />
-            <TableColumn fx:id="tableViewCijenaUsluge" prefWidth="75.0" text="Cijena" />
-            <TableColumn fx:id="tableColumnUslugeStanje" prefWidth="75.0" text="Stanje" />
+          <TableColumn fx:id="tableViewOglasProdaje" prefWidth="75.0" text="Oglas" />
+          <TableColumn fx:id="tableViewKorisnikProdaje" prefWidth="75.0" text="Korisnik" />
+            <TableColumn fx:id="tableViewDatumProdaje" prefWidth="75.0" text="Datum" />
         </columns>
       </TableView>
    </bottom>

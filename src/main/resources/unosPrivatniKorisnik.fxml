@@ -33,6 +33,12 @@
                     <MenuItem mnemonicParsing="false" onAction="#unesiPoslovnogKorisnika" text="Unos"/>
                 </Menu>
             </Menu>
+            <Menu mnemonicParsing="false" text="Prodaja">
+                <items>
+                    <MenuItem mnemonicParsing="false" onAction="#prikaziPretraguProdaja" text="Pretraga" />
+                    <MenuItem mnemonicParsing="false" text="Unos" />
+                </items>
+            </Menu>
         </MenuBar>
     </top>
    <center>

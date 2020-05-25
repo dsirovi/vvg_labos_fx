@@ -1,25 +1,21 @@
 package hr.java.vjezbe.entitet;
 
 public enum Stanje {
-    NOVO("1", "novo"),
-    IZVRSNO("2", "izvrsno"),
-    RABLJENO("3", "rabljeno"),
-    NEISPRAVNO("4", "neispravno");
+    novo("1"),
+    izvrsno("2"),
+    rabljeno("3"),
+    neispravno("4");
 
     private final String id;
-    private final String naziv;
 
-    Stanje(String id, String naziv) {
+    Stanje(String id) {
         this.id = id;
-        this.naziv = naziv;
     }
 
     public  static Stanje odrediStanje(String stanje){
         return valueOf(stanje);
     }
-    public String getNaziv() {
-        return naziv;
-    }
+
 
     public String getId() {
         return id;

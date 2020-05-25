@@ -1,17 +1,16 @@
 package hr.java.vjezbe.baze;
 
-import com.google.inject.spi.StaticInjectionRequest;
 import hr.java.vjezbe.entitet.*;
 import hr.java.vjezbe.iznimke.BazaPodatakaException;
-import javafx.geometry.Pos;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.*;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -35,7 +34,76 @@ public class BazaPodataka {
         return veza;
     }
 
-    public static List<PrivatniKorisnik> dohvatiPrivatnogKorisnikaPremaKriterijima(PrivatniKorisnik privatniKorisnik) throws BazaPodatakaException {
+    public static List<Prodaja> dohvatiProdajuPremaKriterijima(Prodaja prodaja) throws BazaPodatakaException {
+        List<Prodaja> listaProdaje = new ArrayList<>();
+        try (Connection connection = spajanjeNaBazu()) {
+            StringBuilder sqlUpit = new StringBuilder("select distinct korisnik.id as idKorisnika, tipKorisnika.naziv as tipKorisnika, \r\n" + "korisnik.naziv as nazivKorisnika, web, email, telefon, \r\n" + "korisnik.ime, korisnik.prezime, tipArtikla.naziv as tipArtikla,\r\n" + "artikl.naslov, artikl.opis, artikl.cijena, artikl.kvadratura,\r\n" + "artikl.snaga, stanje.naziv as stanje, prodaja.datumObjave, artikl.id as idArtikla\r\n" + "from korisnik inner join \r\n" + "tipKorisnika on tipKorisnika.id = korisnik.idTipKorisnika inner join\r\n" + "prodaja on prodaja.idKorisnik = korisnik.id inner join\r\n" + "artikl on artikl.id = prodaja.idArtikl inner join\r\n" + "tipArtikla on tipArtikla.id = artikl.idTipArtikla inner join\r\n" + "stanje on stanje.id = artikl.idStanje where 1=1");
+            if (Optional.ofNullable(prodaja).isPresent()) {
+                if (Optional.ofNullable(prodaja.getArtikl()).isPresent())
+                    sqlUpit.append(" AND prodaja.idArtikl = ").append(prodaja.getArtikl().getId());
+                if (Optional.ofNullable(prodaja.getKorisnik()).isPresent())
+                    sqlUpit.append(" AND prodaja.idArtikl = ").append(prodaja.getKorisnik().getId());
+                if (Optional.ofNullable(prodaja.getDatumObjave()).isPresent()) {
+                    sqlUpit.append(" AND prodaja.datumObjave = '").append(prodaja.getDatumObjave().format(DateTimeFormatter.ISO_DATE)).append("'");
+                }
+            }
+
+            Statement query = connection.createStatement();
+            ResultSet resultSet = query.executeQuery(sqlUpit.toString());
+
+            while (resultSet.next()) {
+                Korisnik korisnik = null;
+                if (resultSet.getString("tipKorisnika").equals("PrivatniKorisnik")) {
+                    korisnik = new PrivatniKorisnik(resultSet.getLong("idKorisnika"),
+                            resultSet.getString("ime"),
+                            resultSet.getString("prezime"),
+                            resultSet.getString("email"),
+                            resultSet.getString("telefon"));
+                } else if (resultSet.getString("tipKorisnika").equals("PoslovniKorisnik")) {
+                    korisnik = new PoslovniKorisnik(resultSet.getLong("idKorisnika"),
+                            resultSet.getString("nazivKorisnika"),
+                            resultSet.getString("web"),
+                            resultSet.getString("telefon"),
+                            resultSet.getString("email"));
+                }
+                Artikl artikl = null;
+                if (resultSet.getString("tipArtikla").equals("Automobil")) {
+                    artikl = new Automobil(resultSet.getLong("idArtikla"),
+                            resultSet.getString("naslov"),
+                            resultSet.getString("opis"),
+                            resultSet.getBigDecimal("cijena"),
+                            resultSet.getBigDecimal("snaga"),
+                            Stanje.valueOf(resultSet.getString("stanje")));
+                } else if (resultSet.getString("tipArtikla").equals("Usluga")) {
+                    artikl = new Usluga(resultSet.getLong("idArtikla"),
+                            resultSet.getString("naslov"),
+                            resultSet.getString("opis"),
+                            resultSet.getBigDecimal("cijena"),
+                            Stanje.valueOf(resultSet.getString("stanje")));
+                } else if (resultSet.getString("tipArtikla").equals("Stan")) {
+                    artikl = new Stan(resultSet.getLong("idArtikla"),
+                            resultSet.getString("naslov"),
+                            resultSet.getString("opis"),
+                            resultSet.getBigDecimal("cijena"),
+                            Stanje.valueOf(resultSet.getString("stanje")),
+                            resultSet.getBigDecimal("kvadratura"));
+                }
+
+                Prodaja novaProdaja = new Prodaja(artikl, korisnik, resultSet.getTimestamp("datumObjave").toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+                listaProdaje.add(novaProdaja);
+            }
+
+        } catch (SQLException | IOException e) {
+            String poruka = "Došlo je do pogreške u radu s bazom podataka";
+            logger.error(poruka, e);
+            throw new BazaPodatakaException(poruka, e);
+        }
+        return listaProdaje;
+    }
+
+
+    public static List<PrivatniKorisnik> dohvatiPrivatnogKorisnikaPremaKriterijima(PrivatniKorisnik
+                                                                                           privatniKorisnik) throws BazaPodatakaException {
         List<PrivatniKorisnik> listaPrivatnihKorisnika = new ArrayList<>();
         try (Connection connection = spajanjeNaBazu()) {
             StringBuilder sqlUpit = new StringBuilder("select distinct korisnik.id, ime, prezime, email, telefon " + "from korisnik inner join tipKorisnika on tipKorisnika.id = korisnik.idTipKorisnika " + "where tipKorisnika.naziv = 'PrivatniKorisnik'");
@@ -78,7 +146,8 @@ public class BazaPodataka {
         return listaPrivatnihKorisnika;
     }
 
-    public static List<PoslovniKorisnik> dohvatiPoslovnogKorisnikaPremaKriterijima(PoslovniKorisnik poslovniKorisnik) throws BazaPodatakaException {
+    public static List<PoslovniKorisnik> dohvatiPoslovnogKorisnikaPremaKriterijima(PoslovniKorisnik
+                                                                                           poslovniKorisnik) throws BazaPodatakaException {
         List<PoslovniKorisnik> listaPoslovnihKorisnika = new ArrayList<>();
         try (Connection connection = spajanjeNaBazu()) {
             StringBuilder sqlUpit = new StringBuilder("select distinct korisnik.id, korisnik.naziv, web, email, telefon " + "from korisnik inner join tipKorisnika on tipKorisnika.id = korisnik.idTipKorisnika " + "where tipKorisnika.naziv = 'PoslovniKorisnik'");
@@ -121,7 +190,8 @@ public class BazaPodataka {
         return listaPoslovnihKorisnika;
     }
 
-    public static List<Usluga> dohvatiUslugePremaKriterijima(Usluga usluga) throws BazaPodatakaException {
+    public static List<Usluga> dohvatiUslugePremaKriterijima(Usluga usluga) throws
+            BazaPodatakaException {
         List<Usluga> listaUsluga = new ArrayList<>();
         try (Connection connection = spajanjeNaBazu()) {
             StringBuilder sqlUpit = new StringBuilder("SELECT distinct artikl.id, naslov, opis, cijena, stanje.naziv " + "FROM artikl inner join stanje on stanje.id = artikl.idStanje " + "inner join tipArtikla on tipArtikla.id = artikl.idTipArtikla WHERE tipArtikla.naziv = 'Usluga'");
@@ -162,7 +232,8 @@ public class BazaPodataka {
         return listaUsluga;
     }
 
-    public static List<Automobil> dohvatiAutomobilePremaKriterijima(Automobil automobil) throws BazaPodatakaException {
+    public static List<Automobil> dohvatiAutomobilePremaKriterijima(Automobil automobil) throws
+            BazaPodatakaException {
         List<Automobil> listaAutomobila = new ArrayList<>();
         try (Connection connection = spajanjeNaBazu()) {
             StringBuilder sqlUpit = new StringBuilder("SELECT distinct artikl.id, naslov, opis, cijena, snaga, stanje.naziv " + "FROM artikl inner join stanje on stanje.id = artikl.idStanje " + " inner join tipArtikla on tipArtikla.id = artikl.idTipArtikla WHERE tipArtikla.naziv = 'Automobil' ");
@@ -254,7 +325,8 @@ public class BazaPodataka {
         return listaStanova;
     }
 
-    public static void pohraniPrivatnogKorisnika(PrivatniKorisnik privatniKorisnik) throws BazaPodatakaException {
+    public static void pohraniPrivatnogKorisnika(PrivatniKorisnik privatniKorisnik) throws
+            BazaPodatakaException {
         try (Connection veza = spajanjeNaBazu()) {
             PreparedStatement preparedStatement = veza.prepareStatement("insert into korisnik(Ime, Prezime, Email, Telefon, idTipKorisnika) " + "values (?, ?, ?, ?, 1);");
             preparedStatement.setString(1, privatniKorisnik.getIme());
@@ -269,7 +341,8 @@ public class BazaPodataka {
         }
     }
 
-    public static void pohraniPoslovnogKorisnika(PoslovniKorisnik poslovniKorisnik) throws BazaPodatakaException {
+    public static void pohraniPoslovnogKorisnika(PoslovniKorisnik poslovniKorisnik) throws
+            BazaPodatakaException {
         try (Connection veza = spajanjeNaBazu()) {
             PreparedStatement preparedStatement = veza.prepareStatement("insert into korisnik(Naziv, Web, Email, Telefon, idTipKorisnika) " + "values (?, ?, ?, ?, 2);");
             preparedStatement.setString(1, poslovniKorisnik.getNaziv());

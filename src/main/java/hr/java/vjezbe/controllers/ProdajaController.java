@@ -1,16 +1,16 @@
 package hr.java.vjezbe.controllers;
 
 import hr.java.vjezbe.baze.BazaPodataka;
-import hr.java.vjezbe.entitet.Artikl;
-import hr.java.vjezbe.entitet.Automobil;
+import hr.java.vjezbe.entitet.Prodaja;
 import hr.java.vjezbe.iznimke.BazaPodatakaException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 
@@ -18,51 +18,41 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class AutomobiliController {
+public class ProdajaController {
 
-    List<Automobil> automobil;
+    List<Prodaja> prodaja;
 
     @FXML
-    private TextField naslovTextField;
+    private ComboBox<String> artiklCombobox;
     @FXML
-    private TextField opisTextField;
+    private ComboBox<String> korinsnikCombobox;
     @FXML
-    private TextField snagaTextField;
+    private DatePicker datumDatePicker;
     @FXML
-    private TextField cijenaTextField;
+    private TableView<Prodaja> tableViewProdaja;
     @FXML
-    private TableView<Artikl> tableViewAutomobili;
+    private TableColumn<Prodaja, String> tableViewOglasProdaje;
     @FXML
-    private TableColumn<Artikl, String> tableColumnAutomobiliNaslov;
+    private TableColumn<Prodaja, String> tableViewKorisnikProdaje;
     @FXML
-    private TableColumn<Artikl, String> tableColumnAutomobiliOpis;
-    @FXML
-    private TableColumn<Artikl, String> tableColumnAutomobiliCijena;
-    @FXML
-    private TableColumn<Artikl, String> tableColumnAutomobiliSnaga;
-    @FXML
-    private TableColumn<Artikl, String> tableColumnAutomobiliStanje;
+    private TableColumn<Prodaja, String> tableViewDatumProdaje;
 
-    public void pretraziAutomobile() {
-        List<Artikl> filtriraniAutomobili = automobil.stream().filter(p ->
-                p.getNaslov().toLowerCase().contains(naslovTextField.getText())
-                        && p.getOpis().toLowerCase().contains(opisTextField.getText())
-                        && p.getSnagaKs().toString().toLowerCase().contains(snagaTextField.getCharacters())
-                        && p.getCijena().toString().toLowerCase().contains(cijenaTextField.getText())).collect(Collectors.toList());
-        ObservableList<Artikl> pretraga = FXCollections.observableList(filtriraniAutomobili);
-        tableViewAutomobili.setItems(pretraga);
+    public void pretraziProdaju() {
+        List<Prodaja> filtriranaProdaja = prodaja.stream().filter(p ->
+                p.getArtikl().tekstOglasa().contains(artiklCombobox.getValue())
+                        && p.getKorisnik().dohvatiKontakt().toLowerCase().contains(korinsnikCombobox.getValue())
+                        && p.getDatumObjave().toString().toLowerCase().contains(datumDatePicker.getValue().toString())).collect(Collectors.toList());
+        ObservableList<Prodaja> pretraga = FXCollections.observableList(filtriranaProdaja);
+        tableViewProdaja.setItems(pretraga);
     }
 
     public void initialize() throws BazaPodatakaException {
-        tableColumnAutomobiliNaslov.setCellValueFactory(new PropertyValueFactory<Artikl, String>("naslov"));
-        tableColumnAutomobiliOpis.setCellValueFactory(new PropertyValueFactory<Artikl, String>("opis"));
-        tableColumnAutomobiliSnaga.setCellValueFactory(new PropertyValueFactory<Artikl, String>("snagaKs"));
-        tableColumnAutomobiliCijena.setCellValueFactory(new PropertyValueFactory<Artikl, String>("cijena"));
-        tableColumnAutomobiliStanje.setCellValueFactory(new PropertyValueFactory<Artikl, String>("stanje"));
-        automobil = BazaPodataka.dohvatiAutomobilePremaKriterijima((Automobil) automobil);
-        pretraziAutomobile();
+        tableViewOglasProdaje.setCellValueFactory(new PropertyValueFactory<Prodaja, String>("oglas"));
+        tableViewKorisnikProdaje.setCellValueFactory(new PropertyValueFactory<Prodaja, String>("korisnik"));
+        tableViewDatumProdaje.setCellValueFactory(new PropertyValueFactory<Prodaja, String>("datum"));
+        prodaja = BazaPodataka.dohvatiProdajuPremaKriterijima((Prodaja) prodaja);
+        pretraziProdaju();
     }
-
 
     public void prikaziPretraguProdaja() {
         BorderPane root;
