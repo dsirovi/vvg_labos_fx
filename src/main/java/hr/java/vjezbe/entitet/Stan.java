@@ -38,7 +38,7 @@ public class Stan extends Artikl implements Nekretnina, Serializable {
             tekstIzracunaPoreza = e.getMessage();
         }
        return String.format(
-               "Naslov nakretnine: %s \nStanje nekretnine: %s \nOpis nekretnine: %s \nSKvadratura nekretnine: %s \nCijena nekretnine: %s \nPorez nekretnine: %s",
+               "Naslov nakretnine: %s Stanje nekretnine: %s Opis nekretnine: %s Kvadratura nekretnine: %s Cijena nekretnine: %s Porez nekretnine: %s",
                getNaslov(),
                getStanje().toString().toLowerCase(),
                getOpis(),

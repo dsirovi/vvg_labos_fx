@@ -40,12 +40,9 @@ public class UnosAutomobilaController {
 
 
     public void initialize(){
-
         List<Stanje> stanjaList = Arrays.stream(Stanje.values())
 //                .map(Stanje::getNaziv)
                 .collect(Collectors.toList());
-
-
         stanjeComboBox.setItems(FXCollections.observableArrayList(stanjaList));
     }
     public void spremiAutomobil() {
@@ -194,6 +191,16 @@ public class UnosAutomobilaController {
         BorderPane root;
         try {
             root =  FXMLLoader.load(getClass().getResource("/unosStan.fxml"));
+            Main.setMainPage(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void unesiProdaju() {
+        BorderPane root;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/UnosProdaja.fxml"));
             Main.setMainPage(root);
         } catch (IOException e) {
             e.printStackTrace();

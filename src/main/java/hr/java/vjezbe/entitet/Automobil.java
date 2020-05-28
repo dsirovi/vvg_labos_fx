@@ -67,10 +67,10 @@ public class Automobil extends Artikl implements Vozilo, Serializable {
             tekstIzracunaOsiguranja = e.getMessage();
         }
         return String.format(
-                "Naslov automobila: %s \nOpis automobila: %s \nStanje automobila: %s \nSnaga automobila u kW: %s \nIzracun osiguranja automobila: %s \nCijena automobila: %s",
+                "Naslov automobila: %s Opis automobila: %s Stanje automobila: %s Snaga automobila u kW: %s Izracun osiguranja automobila: %s Cijena automobila: %s",
                 getNaslov(),
                 getOpis(),
-                getStanje().toString().toLowerCase(),
+                getStanje().toString(),
                 izracunajKw(snagaKs).setScale(2, RoundingMode.CEILING),
                 tekstIzracunaOsiguranja,
                 getCijena()

@@ -20,6 +20,6 @@ public class Usluga extends Artikl implements Serializable {
 
     @Override
     public String tekstOglasa() {
-        return String.format("Naslov: %s \nOpis: %s \ncijena: %s", getNaslov(), getOpis(), getCijena());
+        return String.format("Naslov: %s Opis: %s cijena: %s stanje: %s", getNaslov(), getOpis(), getCijena(), getStanje().toString());
     }
 }

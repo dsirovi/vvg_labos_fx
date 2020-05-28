@@ -1,6 +1,8 @@
 package hr.java.vjezbe.controllers;
 
 import hr.java.vjezbe.baze.BazaPodataka;
+import hr.java.vjezbe.entitet.Artikl;
+import hr.java.vjezbe.entitet.Korisnik;
 import hr.java.vjezbe.entitet.Prodaja;
 import hr.java.vjezbe.iznimke.BazaPodatakaException;
 import javafx.collections.FXCollections;
@@ -21,11 +23,13 @@ import java.util.stream.Collectors;
 public class ProdajaController {
 
     List<Prodaja> prodaja;
+    List<Artikl> artikl = BazaPodataka.dohvatiSveArtikle(null);
+    List<Korisnik> korisnici = BazaPodataka.dohvatiSveKorisnike(null);
 
     @FXML
-    private ComboBox<String> artiklCombobox;
+    private ComboBox<Artikl> artiklCombobox;
     @FXML
-    private ComboBox<String> korinsnikCombobox;
+    private ComboBox<Korisnik> korinsnikCombobox;
     @FXML
     private DatePicker datumDatePicker;
     @FXML
@@ -37,10 +41,18 @@ public class ProdajaController {
     @FXML
     private TableColumn<Prodaja, String> tableViewDatumProdaje;
 
+    public ProdajaController() throws BazaPodatakaException {
+    }
+
+//    public void korisniciComboBox(List<Korisnik> korisnici) throws BazaPodatakaException {
+//        korisnici.stream().map(Korisnik::dohvatiKontakt).collect(Collectors.toList());
+//        korinsnikCombobox.setItems(FXCollections.observableList(korisnici));
+//    }
+
     public void pretraziProdaju() {
         List<Prodaja> filtriranaProdaja = prodaja.stream().filter(p ->
-                p.getArtikl().tekstOglasa().contains(artiklCombobox.getValue())
-                        && p.getKorisnik().dohvatiKontakt().toLowerCase().contains(korinsnikCombobox.getValue())
+                p.getArtikl().tekstOglasa().contains(artiklCombobox.toString())
+                        && p.getKorisnik().dohvatiKontakt().toLowerCase().contains(korinsnikCombobox.toString())
                         && p.getDatumObjave().toString().toLowerCase().contains(datumDatePicker.getValue().toString())).collect(Collectors.toList());
         ObservableList<Prodaja> pretraga = FXCollections.observableList(filtriranaProdaja);
         tableViewProdaja.setItems(pretraga);
@@ -51,7 +63,16 @@ public class ProdajaController {
         tableViewKorisnikProdaje.setCellValueFactory(new PropertyValueFactory<Prodaja, String>("korisnik"));
         tableViewDatumProdaje.setCellValueFactory(new PropertyValueFactory<Prodaja, String>("datum"));
         prodaja = BazaPodataka.dohvatiProdajuPremaKriterijima((Prodaja) prodaja);
-        pretraziProdaju();
+
+        artikl.stream()
+                .map(Artikl::tekstOglasa)
+                .collect(Collectors.toList());
+        artiklCombobox.setItems(FXCollections.observableList(artikl));
+
+        korisnici.stream()
+                .map(Korisnik::dohvatiKontakt)
+                .collect(Collectors.toList());
+        korinsnikCombobox.setItems(FXCollections.observableList(korisnici));
     }
 
     public void prikaziPretraguProdaja() {
@@ -158,6 +179,16 @@ public class ProdajaController {
         BorderPane root;
         try {
             root = FXMLLoader.load(getClass().getResource("/unosStan.fxml"));
+            Main.setMainPage(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void unesiProdaju() {
+        BorderPane root;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/UnosProdaja.fxml"));
             Main.setMainPage(root);
         } catch (IOException e) {
             e.printStackTrace();
