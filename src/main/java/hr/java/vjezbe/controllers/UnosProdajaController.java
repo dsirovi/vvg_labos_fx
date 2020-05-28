@@ -1,62 +1,76 @@
 package hr.java.vjezbe.controllers;
 
 import hr.java.vjezbe.baze.BazaPodataka;
+import hr.java.vjezbe.entitet.Artikl;
 import hr.java.vjezbe.entitet.Entitet;
-import hr.java.vjezbe.entitet.PoslovniKorisnik;
+import hr.java.vjezbe.entitet.Korisnik;
+import hr.java.vjezbe.entitet.Prodaja;
 import hr.java.vjezbe.iznimke.BazaPodatakaException;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
-import javafx.scene.control.TextField;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.OptionalLong;
+import java.util.stream.Collectors;
 
-public class UnosPoslovniKorisnikContoller {
+public class UnosProdajaController {
 
-    List<PoslovniKorisnik> poslovniKorisnici = BazaPodataka.dohvatiPoslovnogKorisnikaPremaKriterijima(null);
+    List<Prodaja> prodaja = BazaPodataka.dohvatiProdajuPremaKriterijima(null);
+    List<Artikl> artikl = BazaPodataka.dohvatiSveArtikle(null);
+    List<Korisnik> korisnici = BazaPodataka.dohvatiSveKorisnike(null);
 
     @FXML
-    private TextField nazivPoslovnogKorisnika;
+    private ComboBox<Artikl> artiklCombobox;
     @FXML
-    private TextField emailPoslovnogKorisnika;
+    private ComboBox<Korisnik> korinsnikCombobox;
     @FXML
-    private TextField webPoslovnogKorisnik;
-    @FXML
-    private TextField telefonPoslovnogKorisnika;
+    private DatePicker datumDatePicker;
 
-    public UnosPoslovniKorisnikContoller() throws BazaPodatakaException {
+    public UnosProdajaController() throws BazaPodatakaException {
     }
 
-    public void spremiPoslovnogKorisnika() {
+    public void initialize() throws BazaPodatakaException {
+        artikl.stream().map(Artikl::tekstOglasa).collect(Collectors.toList());
+        artiklCombobox.setItems(FXCollections.observableList(artikl));
 
-        if (nazivPoslovnogKorisnika.getText().isBlank() || emailPoslovnogKorisnika.getText().isBlank() || webPoslovnogKorisnik.getText().isBlank()
-                || telefonPoslovnogKorisnika.getText().isBlank()) {
+        korisnici.stream()
+                .map(Korisnik::dohvatiKontakt)
+                .collect(Collectors.toList());
+        korinsnikCombobox.setItems(FXCollections.observableList(korisnici));
+    }
+
+    public void spremiProdaju() {
+
+        if (artiklCombobox.getValue() == null || korinsnikCombobox.getValue() == null || datumDatePicker.getValue() == null) {
             Alert upozorenje = new Alert(Alert.AlertType.ERROR);
             upozorenje.setTitle("Pogreska pri unosu");
-            upozorenje.setHeaderText("Provjerite podatke o unosu korisnika");
+            upozorenje.setHeaderText("Provjerite podatke o unosu prodaje");
             String opis = "Nedostaje podatak za: \n";
-            if (nazivPoslovnogKorisnika.getText().isBlank())
-                opis += "naziv korisnika, \n";
-            if (emailPoslovnogKorisnika.getText().isBlank())
-                opis += "email korisnika, \n";
-            if (webPoslovnogKorisnik.getText().isBlank())
-                opis += "web korisnika, \n";
-            if (telefonPoslovnogKorisnika.getText().isBlank())
-                opis += "telefon korisnika ";
+            if (artiklCombobox.getValue() == null)
+                opis += "artikl, \n";
+            if (korinsnikCombobox.getValue() == null)
+                opis += "korisnika, \n";
+            if (datumDatePicker.getValue() == null)
+                opis += "datum objave \n";
             upozorenje.setContentText(opis);
             upozorenje.showAndWait();
         } else {
-            OptionalLong maxId = poslovniKorisnici.stream().mapToLong(Entitet::getId).max();
+            OptionalLong maxId = prodaja.stream().mapToLong(Entitet::getId).max();
 
-            PoslovniKorisnik noviPoslovniKorisnik = new PoslovniKorisnik(maxId.getAsLong() + 1, emailPoslovnogKorisnika.getText(), telefonPoslovnogKorisnika.getText(), nazivPoslovnogKorisnika.getText(), webPoslovnogKorisnik.getText());
-            poslovniKorisnici.add(noviPoslovniKorisnik);
+            Prodaja novaProdaja = new Prodaja(maxId.getAsLong() + 1, artiklCombobox.getValue(),korinsnikCombobox.getValue(), LocalDate.parse(datumDatePicker.getValue().toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+            prodaja.add(novaProdaja);
 
 
             try {
-                BazaPodataka.pohraniPoslovnogKorisnika(noviPoslovniKorisnik);
+                BazaPodataka.pohraniProdaju(novaProdaja);
             } catch (BazaPodatakaException e) {
                 Alert upozorenje = new Alert(Alert.AlertType.ERROR);
                 upozorenje.setTitle("Greska");
@@ -65,7 +79,7 @@ public class UnosPoslovniKorisnikContoller {
                 e.printStackTrace();
                 return;
             }
-            poslovniKorisnici.add(noviPoslovniKorisnik);
+            prodaja.add(novaProdaja);
             Alert upozorenje = new Alert(Alert.AlertType.CONFIRMATION);
             upozorenje.setTitle("Uspjesan unos");
             upozorenje.setHeaderText("Podaci o korisniku su uspjesno pohranjeni");
@@ -134,6 +148,16 @@ public class UnosPoslovniKorisnikContoller {
         }
     }
 
+    public void unesiProdaju() {
+        BorderPane root;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/UnosProdaja.fxml"));
+            Main.setMainPage(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void unesiPrivatnogKorisnika() {
         BorderPane root;
         try {
@@ -178,16 +202,6 @@ public class UnosPoslovniKorisnikContoller {
         BorderPane root;
         try {
             root = FXMLLoader.load(getClass().getResource("/unosStan.fxml"));
-            Main.setMainPage(root);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void unesiProdaju() {
-        BorderPane root;
-        try {
-            root = FXMLLoader.load(getClass().getResource("/UnosProdaja.fxml"));
             Main.setMainPage(root);
         } catch (IOException e) {
             e.printStackTrace();

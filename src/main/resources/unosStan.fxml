@@ -36,7 +36,7 @@
             <Menu mnemonicParsing="false" text="Prodaja">
                 <items>
                     <MenuItem mnemonicParsing="false" onAction="#prikaziPretraguProdaja" text="Pretraga" />
-                    <MenuItem mnemonicParsing="false" text="Unos" />
+                    <MenuItem mnemonicParsing="false" onAction="#unesiProdaju" text="Unos" />
                 </items>
             </Menu>
         </MenuBar>

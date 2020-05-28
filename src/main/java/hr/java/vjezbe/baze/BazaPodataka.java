@@ -34,6 +34,119 @@ public class BazaPodataka {
         return veza;
     }
 
+
+    public static List<Artikl> dohvatiSveArtikle(Artikl artikl) throws BazaPodatakaException {
+        List<Artikl> listaArtikala = new ArrayList<>();
+        try (Connection connection = spajanjeNaBazu()) {
+            StringBuilder sqlUpit = new StringBuilder("SELECT distinct artikl.id as idArtikla, naslov, opis, cijena, snaga, \r\n" + " kvadratura, stanje.naziv as stanje, tipArtikla.naziv as tipArtikla \r\n" + "FROM artikl inner join \r\n" + "stanje on stanje.id = artikl.idStanje inner join \r\n" + "tipArtikla on tipArtikla.id = artikl.idTipArtikla ");
+            if (Optional.ofNullable(artikl).isPresent()) {
+                Optional.of(artikl).map(Artikl::getId);
+                sqlUpit.append(" AND artikl.id = ").append(artikl.getId());
+
+                if (!Optional.ofNullable(artikl.getNaslov()).map(String::isBlank).orElse(true))
+                    sqlUpit.append(" AND artikl.naslov LIKE '%").append(artikl.getNaslov()).append("%'");
+
+                if (!Optional.ofNullable(artikl.getOpis()).map(String::isBlank).orElse(true))
+                    sqlUpit.append(" AND artikl.opis LIKE '%").append(artikl.getOpis()).append("%'");
+
+                if (Optional.of(artikl).map(Artikl::getCijena).isPresent())
+                    sqlUpit.append(" AND artikl.cijena = ").append(artikl.getCijena());
+            }
+
+            Statement query = connection.createStatement();
+            ResultSet resultSet = query.executeQuery(sqlUpit.toString());
+
+            while (resultSet.next()) {
+                if (resultSet.getString("tipArtikla").equals("Automobil")) {
+                    long id = resultSet.getLong("id");
+                    String naslov = resultSet.getString("naslov");
+                    String opis = resultSet.getString("opis");
+                    BigDecimal cijena = resultSet.getBigDecimal("cijena");
+                    BigDecimal snaga = resultSet.getBigDecimal("snaga");
+                    String stanje = resultSet.getString("naziv");
+
+                    Automobil noviAutomobil = new Automobil(id, naslov, opis, cijena, snaga, Stanje.valueOf(stanje));
+                    listaArtikala.add(noviAutomobil);
+
+                } else if (resultSet.getString("tipArtikla").equals("Usluga")) {
+                    long id = resultSet.getLong("id");
+                    String naslov = resultSet.getString("naslov");
+                    String opis = resultSet.getString("opis");
+                    BigDecimal cijena = resultSet.getBigDecimal("cijena");
+                    String stanje = resultSet.getString("naziv");
+
+                    Usluga novaUsluga = new Usluga(id, naslov, opis, cijena, Stanje.valueOf(stanje));
+                    listaArtikala.add(novaUsluga);
+
+                } else if (resultSet.getString("tipArtikla").equals("Stan")) {
+                    long id = resultSet.getLong("id");
+                    String naslov = resultSet.getString("naslov");
+                    String opis = resultSet.getString("opis");
+                    BigDecimal cijena = resultSet.getBigDecimal("cijena");
+                    BigDecimal kvadratura = resultSet.getBigDecimal("kvadratura");
+                    String stanje = resultSet.getString("naziv");
+
+                    Stan newStan = new Stan(id, naslov, opis, cijena, Stanje.valueOf(stanje), kvadratura);
+                    listaArtikala.add(newStan);
+                }
+            }
+
+        } catch (SQLException |
+                IOException e) {
+            String poruka = "Došlo je do pogreške u radu s bazom podataka";
+            logger.error(poruka, e);
+            throw new BazaPodatakaException(poruka, e);
+        }
+        return listaArtikala;
+    }
+
+    public static List<Korisnik> dohvatiSveKorisnike(Korisnik korisnik) throws BazaPodatakaException {
+        List<Korisnik> listaKorisnika = new ArrayList<>();
+        try (Connection connection = spajanjeNaBazu()) {
+            StringBuilder sqlUpit = new StringBuilder("SELECT distinct korisnik.id as idKorisnika, korisnik.naziv, web, email, \r\n" + "telefon, ime, prezime, tipKorisnika.naziv as tipKorisnika \r\n" + "from korisnik inner join \r\n" + " tipKorisnika on tipKorisnika.id = korisnik.idTipKorisnika");
+            if (Optional.ofNullable(korisnik).isPresent()) {
+                if (Optional.ofNullable(korisnik.getEmail()).isPresent()) {
+                    sqlUpit.append(" AND korisnik.email = ").append(korisnik.getEmail());
+                }
+                if (Optional.ofNullable(korisnik.getTelefon()).isPresent())
+                    sqlUpit.append(" AND korisnik.telefon = ").append(korisnik.getTelefon());
+            }
+
+            Statement query = connection.createStatement();
+            ResultSet resultSet = query.executeQuery(sqlUpit.toString());
+
+            while (resultSet.next()) {
+                if (resultSet.getString("tipKorisnika").equals("PoslovniKorisnik")) {
+                    long id = resultSet.getLong("id");
+                    String ime = resultSet.getString("ime");
+                    String prezime = resultSet.getString("prezime");
+                    String email = resultSet.getString("email");
+                    String telefon = resultSet.getString("telefon");
+
+                    PrivatniKorisnik noviPrivatniKorisnik = new PrivatniKorisnik(id, email, telefon, ime, prezime);
+                    listaKorisnika.add(noviPrivatniKorisnik);
+                }
+
+                if (resultSet.getString("tipKorisnika").equals("PoslovniKorisnik")) {
+                    long id = resultSet.getLong("id");
+                    String naslov = resultSet.getString("naziv");
+                    String web = resultSet.getString("web");
+                    String email = resultSet.getString("email");
+                    String telefon = resultSet.getString("telefon");
+
+                    PoslovniKorisnik noviPoslovniKorisnik = new PoslovniKorisnik(id, email, telefon, naslov, web);
+                    listaKorisnika.add(noviPoslovniKorisnik);
+                }
+            }
+
+        } catch (SQLException | IOException e) {
+            String poruka = "Došlo je do pogreške u radu s bazom podataka";
+            logger.error(poruka, e);
+            throw new BazaPodatakaException(poruka, e);
+        }
+        return listaKorisnika;
+    }
+
     public static List<Prodaja> dohvatiProdajuPremaKriterijima(Prodaja prodaja) throws BazaPodatakaException {
         List<Prodaja> listaProdaje = new ArrayList<>();
         try (Connection connection = spajanjeNaBazu()) {
@@ -42,7 +155,7 @@ public class BazaPodataka {
                 if (Optional.ofNullable(prodaja.getArtikl()).isPresent())
                     sqlUpit.append(" AND prodaja.idArtikl = ").append(prodaja.getArtikl().getId());
                 if (Optional.ofNullable(prodaja.getKorisnik()).isPresent())
-                    sqlUpit.append(" AND prodaja.idArtikl = ").append(prodaja.getKorisnik().getId());
+                    sqlUpit.append(" AND prodaja.idKorisnik = ").append(prodaja.getKorisnik().getId());
                 if (Optional.ofNullable(prodaja.getDatumObjave()).isPresent()) {
                     sqlUpit.append(" AND prodaja.datumObjave = '").append(prodaja.getDatumObjave().format(DateTimeFormatter.ISO_DATE)).append("'");
                 }
@@ -218,9 +331,8 @@ public class BazaPodataka {
                 String opis = resultSet.getString("opis");
                 BigDecimal cijena = resultSet.getBigDecimal("cijena");
                 String stanje = resultSet.getString("naziv");
-                Stanje stanjeUnos = Stanje.odrediStanje(stanje.toUpperCase());
 
-                Usluga novaUsluga = new Usluga(id, naslov, opis, cijena, stanjeUnos);
+                Usluga novaUsluga = new Usluga(id, naslov, opis, cijena, Stanje.valueOf(stanje));
                 listaUsluga.add(novaUsluga);
             }
 
@@ -264,9 +376,8 @@ public class BazaPodataka {
                 BigDecimal cijena = resultSet.getBigDecimal("cijena");
                 BigDecimal snaga = resultSet.getBigDecimal("snaga");
                 String stanje = resultSet.getString("naziv");
-                Stanje stanjeUnos = Stanje.odrediStanje(stanje.toUpperCase());
 
-                Automobil noviAutomobil = new Automobil(id, naslov, opis, cijena, snaga, stanjeUnos);
+                Automobil noviAutomobil = new Automobil(id, naslov, opis, cijena, snaga, Stanje.valueOf(stanje));
                 listaAutomobila.add(noviAutomobil);
             }
         } catch (SQLException | IOException e) {
@@ -311,9 +422,8 @@ public class BazaPodataka {
                 BigDecimal cijena = resultSet.getBigDecimal("cijena");
                 BigDecimal kvadratura = resultSet.getBigDecimal("kvadratura");
                 String stanje = resultSet.getString("naziv");
-                Stanje stanjeUnos = Stanje.odrediStanje(stanje.toUpperCase());
 
-                Stan newStan = new Stan(id, naslov, opis, cijena, stanjeUnos, kvadratura);
+                Stan newStan = new Stan(id, naslov, opis, cijena, Stanje.valueOf(stanje), kvadratura);
                 listaStanova.add(newStan);
             }
 
@@ -323,6 +433,21 @@ public class BazaPodataka {
             throw new BazaPodatakaException(poruka, e);
         }
         return listaStanova;
+    }
+
+    public static void pohraniProdaju(Prodaja prodaja) throws
+            BazaPodatakaException {
+        try (Connection veza = spajanjeNaBazu()) {
+            PreparedStatement preparedStatement = veza.prepareStatement("insert into prodaja(idArtikl, idKorisnik, datumObjave) " + "values (?, ?, ?);");
+            preparedStatement.setLong(1, prodaja.getArtikl().getId());
+            preparedStatement.setLong(2, prodaja.getKorisnik().getId());
+            preparedStatement.setString(3, prodaja.getDatumObjave().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+            preparedStatement.executeUpdate();
+        } catch (SQLException | IOException ex) {
+            String poruka = "Došlo je do pogreške u radu s bazom podataka";
+            logger.error(poruka, ex);
+            throw new BazaPodatakaException(poruka, ex);
+        }
     }
 
     public static void pohraniPrivatnogKorisnika(PrivatniKorisnik privatniKorisnik) throws

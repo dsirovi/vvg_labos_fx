@@ -122,5 +122,15 @@ public class PretragaController {
             e.printStackTrace();
         }
     }
+
+    public void unesiProdaju() {
+        BorderPane root;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/UnosProdaja.fxml"));
+            Main.setMainPage(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
 
